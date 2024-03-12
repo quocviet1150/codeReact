@@ -13,7 +13,7 @@
 .header {
   display: flex;
   align-items: center;
-  padding: 20px 0;
+  padding: 5px 0;
   width: 90%;
   margin-left: 5%;
   background: antiquewhite;
@@ -68,7 +68,7 @@
 .menu ul li a {
   text-decoration: none;
   color: #333;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 600;
 }
 
@@ -188,17 +188,102 @@
 }
 
 .image-product-container {
+  width: 90%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
+  margin-left: 5%;
 }
 
 .image-product {
-  width: 19%;
+  width: calc(19% - 10px);
+  /* Độ rộng - khoảng cách margin-right */
   margin-bottom: 20px;
+  margin-right: 10px;
+  /* Khoảng cách giữa các ảnh */
+  padding: 0 0.5%;
+  transition: transform 0.3s ease-in-out;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(167, 159, 159, 0.05);
 }
 
-.image_product {
+.image-product:last-child {
+  margin-right: 0;
+  /* Không cần margin-right cho ảnh cuối cùng */
+}
+
+.image-product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.product-image {
   width: 100%;
   height: auto;
+  border-radius: 10px;
+  padding: 0.5% 0%;
+}
+
+.description {
+  padding-top: 1%;
+}
+
+.price {
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.product-link {
+  text-decoration: none;
+  color: black;
+}
+
+.product-link:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.product-detail-image {
+  height: 90vh;
+  width: 90%;
+}
+
+.title-image {
+  font-size: 24px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.product-price {
+  display: inline-block;
+  font-size: 18px;
+  color: #c80204;
+  margin: 0 0 10px;
+  text-decoration: none;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.product-detail-view {
+  height: 20vh;
+  padding: 2% 0 0 2%;
+}
+
+.btn-signup {
+  padding: 2.5% 0;
+  width: 100%;
+  color: #FFFFFF;
+  background-color: red;
+  border: 2px solid red;
+  border-radius: 5px;
+}
+
+.btn-add{
+  padding: 2.5% 0;
+  width: 100%;
+  color: red;
+  /* background-color: red; */
+  border: 2px solid red;
+  border-radius: 5px;
 }

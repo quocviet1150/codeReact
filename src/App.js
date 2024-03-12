@@ -3,6 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import Navigation from "./components/nav.component";
 import Index from "./components/index.component";
 import Home from "./view/home"
+import ProductDetail from "./view/productDetail"
 import { Container } from "@mui/material";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
@@ -14,7 +15,8 @@ function App() {
         <Navigation />
         {location.pathname === "/" ? (
           <Container sx={{ mt: 4, height: "100%" }}>
-            <Home />
+            <ProductDetail />
+            {/* <Home /> */}
           </Container>
         ) : (
           <Container sx={{ mt: 4, height: "100%" }}>
