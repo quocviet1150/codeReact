@@ -44,61 +44,61 @@ export default function Home() {
         {
             id: 1,
             imagePath: require("../image/home/4.png"),
-            description: "Mô tả ảnh 1",
+            name: "Mô tả ảnh 1",
             price: 10.99
         },
         {
             id: 2,
             imagePath: require("../image/home/4.png"),
-            description: "Mô tả ảnh 2",
+            name: "Mô tả ảnh 2",
             price: 15.99
         },
         {
             id: 3,
             imagePath: require("../image/home/4.png"),
-            description: "Mô tả ảnh 3",
+            name: "Mô tả ảnh 3",
             price: 15.99
         },
         {
             id: 4,
             imagePath: require("../image/home/4.png"),
-            description: "Mô tả ảnh 4",
+            name: "Mô tả ảnh 4",
             price: 15.99
         },
         {
             id: 5,
             imagePath: require("../image/home/4.png"),
-            description: "Mô tả ảnh 5",
+            name: "Mô tả ảnh 5",
             price: 15.99
         },
         {
             id: 6,
             imagePath: require("../image/home/4.png"),
-            description: "Mô tả ảnh 6",
+            name: "Mô tả ảnh 6",
             price: 15.99
         },
         {
             id: 7,
             imagePath: require("../image/home/4.png"),
-            description: "Mô tả ảnh 7",
+            name: "Mô tả ảnh 7",
             price: 15.99
         },
         {
             id: 8,
             imagePath: require("../image/home/4.png"),
-            description: "Mô tả ảnh 8",
+            name: "Mô tả ảnh 8",
             price: 15.99
         },
         {
             id: 9,
             imagePath: require("../image/home/4.png"),
-            description: "Mô tả ảnh 9",
+            name: "Mô tả ảnh 9",
             price: 15.99
         },
         {
             id: 10,
             imagePath: require("../image/home/4.png"),
-            description: "Mô tả ảnh 10",
+            name: "Mô tả ảnh 10",
             price: 15.99
         },
     ];
@@ -174,10 +174,9 @@ export default function Home() {
                 <div className="image-product-container">
                     {images.map((image, index) => (
                         <div className="image-product" key={index}>
-                            {/* Sử dụng <a> tag để bao bọc sản phẩm */}
                             <a className="product-link" onClick={() => handleProductClick(image.id)}>
-                                <img className="product-image" src={image.imagePath} alt={image.description} />
-                                <p className="description">{image.description}</p>
+                                <img className="product-image" src={image.imagePath} alt={image.name} />
+                                <p className="name">{image.name}</p>
                                 <p className="price">${image.price}</p>
                             </a>
                         </div>

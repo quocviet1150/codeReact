@@ -1,15 +1,67 @@
-import { faPlus, faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faPlus, faSearch, faShoppingBasket, faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Instructions from "./instructions";
+import { Link } from 'react-router-dom';
 
 const ProductDetail = () => {
+    const images = [
+        { idDetail: 1, path: require("../image/home/4.png") },
+        { idDetail: 2, path: require("../image/home/2.png") },
+        { idDetail: 3, path: require("../image/home/1.png") },
+        { idDetail: 4, path: require("../image/home/3.png") }
+    ];
+
+    const product =
+    {
+        name: "Quần kaki túi nhỏ kiểu form slimfit QK026 màu xám",
+        price: 10.99,
+        path: require("../image/home/4.png"),
+        quantityRemaining: 100,
+        quantityFeedback: 50,
+        sellNumber: 500
+    }
+
+    const imagePaths = {
+        1: [
+            require("../image/home/1.png"),
+            require("../image/home/2.png"),
+            require("../image/home/3.png"),
+            require("../image/home/4.png"),
+            require("../image/home/4.png"),
+            require("../image/home/4.png"),
+            require("../image/home/4.png"),
+        ],
+        2: [
+            require("../image/home/2.png"),
+            require("../image/home/3.png"),
+        ],
+        3: [
+            require("../image/home/4.png"),
+            require("../image/home/4.png"),
+        ],
+        4: [
+            require("../image/home/1.png"),
+        ]
+    };
+
+    // const imagePaths = [
+    //     require("../image/home/1.png"),
+    //     require("../image/home/2.png"),
+    //     require("../image/home/3.png"),
+    //     require("../image/home/4.png"),
+    //     require("../image/home/4.png"),
+    //     require("../image/home/4.png"),
+    //     require("../image/home/4.png"),
+    // ];
+
     const { productId } = useParams();
     const [selectedItem, setSelectedItem] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [isPopupVisible, setPopupVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [selectedImagePath, setSelectedImagePath] = useState(product.path);
 
     useEffect(() => {
         setTimeout(() => {
@@ -49,16 +101,13 @@ const ProductDetail = () => {
         }
     };
 
-    const images = [
-        { idDetail: 1, path: require("../image/home/4.png") },
-        { idDetail: 2, path: require("../image/home/2.png") },
-        { idDetail: 3, path: require("../image/home/1.png") },
-        { idDetail: 4, path: require("../image/home/3.png") }
-    ];
+    const handleImageClick = (path) => {
+        setSelectedImagePath(path);
+    };
 
     return (
         <>
-            {/* <div className="header_1">
+            <div className="header_1">
                 <div className="header">
                     <div className="logo-container" onClick={() => window.location.href = "http://localhost:3000"}>
                         <img className="logo" src="https://img.freepik.com/premium-vector/tshirt-logo-clothing-logo-apparel-store-icon-fashion-logo-design-tshirt-icon-template_657888-112.jpg" alt="Shirt Store Logo" />
@@ -86,14 +135,31 @@ const ProductDetail = () => {
                         <FontAwesomeIcon icon={faHeart} className="search-icon" />
                     </div>
                 </div>
-            </div> */}
+            </div>
 
-            <div style={{ display: 'flex', marginLeft: '5%', padding: '2% 5%' }}>
-                <div style={{ width: "50%" }}>
-                    <img className="product-detail-image" src={require("../image/home/4.png")} alt="Shirt Store Logo" />
+            <div className="breadcrumb">
+                <Link to="/" className="breadcrumb-item-hover">Product</Link>
+                <span className="breadcrumb-divider">/</span>
+                <span className="breadcrumb-item">{product.name}</span>
+            </div>
+
+            <div style={{ display: 'flex', marginLeft: '5%', padding: '0% 5%' }}>
+                <div style={{ width: "10%", height: '85vh', overflowY: 'auto', cursor: 'pointer' }}>
+                    {imagePaths.map((path, index) => (
+                        <img
+                            key={index}
+                            className="product-detail-view-total"
+                            src={path}
+                            alt={`Image ${index + 1}`}
+                            onClick={() => handleImageClick(path)}
+                        />
+                    ))}
                 </div>
-                <div style={{ width: "50%" }}>
-                    <div className="title-image">QUẦN KAKI TÚI NHỎ KIỂU FORM SLIMFIT QK026 MÀU XÁM</div>
+                <div style={{ width: "45%" }}>
+                    <img className="product-detail-image" src={selectedImagePath} alt="Shirt Store Logo" />
+                </div>
+                <div style={{ width: "45%" }}>
+                    <div className="title-image">{product.name.toLowerCase()}</div>
 
                     <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', paddingTop: '1%' }}>
                         <div style={{ marginRight: '10px', borderRight: '1px solid #ccc', paddingRight: '5px' }}>
@@ -104,16 +170,16 @@ const ProductDetail = () => {
                             <span style={{ color: '#fadb14', marginRight: '5px' }}>★</span>
                             <span style={{ color: '#fadb14', marginRight: '5px' }}>★</span>
                         </div>
-                        <span style={{ marginRight: '10px', borderRight: '1px solid #ccc', paddingRight: '5px' }}>Đánh giá: 100</span>
-                        <span style={{ marginRight: '10px' }}>Đã bán: 500</span>
+                        <span style={{ marginRight: '10px', borderRight: '1px solid #ccc', paddingRight: '5px' }}>Phản hồi: {product.quantityFeedback}</span>
+                        <span style={{ marginRight: '10px' }}>Đã bán: {product.sellNumber}</span>
                     </div>
 
                     <div style={{ padding: '2% 0', fontSize: '18px' }}>
-                        Giá bán: <div className='product-price'>$15.99</div>
+                        Giá bán: <div className='product-price'>${product.price}</div>
                     </div>
                     <div style={{ borderBottom: '2px solid #ccc', paddingBottom: '2%' }}>
                         <div style={{ fontSize: '18px' }}>
-                            Màu khác<span style={{ color: 'red' }}> *</span>:
+                            Mẫu khác<span style={{ color: 'red' }}> *</span>:
                         </div>
                         <div className="product-images">
                             {images.map(image => (
@@ -127,10 +193,8 @@ const ProductDetail = () => {
                             <div style={{ fontSize: '16px', width: '30%' }}>
                                 Size
                                 <span style={{ color: 'red' }}> *</span>:
-
                             </div>
                             <div style={{ width: '70%' }}>
-
                                 <select className='select'>
                                     <option selected value="27">27</option>
                                     <option value="28">28</option>
@@ -167,7 +231,7 @@ const ProductDetail = () => {
                                 <button className="increment-btn" onClick={incrementQuantity} style={{ background: '#ffffff', border: '1px solid #ccc', borderLeft: 'none' }}>+</button>
                             </div>
 
-                            <div style={{ paddingLeft: '5%' }}>9999 sản phẩm có sẵn</div>
+                            <div style={{ paddingLeft: '5%' }}>{product.quantityRemaining} sản phẩm có sẵn</div>
                         </div>
 
                     </div>
