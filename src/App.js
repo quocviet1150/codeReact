@@ -15,8 +15,7 @@ function App() {
         <Navigation />
         {location.pathname === "/" ? (
           <Container sx={{ mt: 4, height: "100%" }}>
-            <ProductDetail />
-            {/* <Home /> */}
+            <Home />
           </Container>
         ) : (
           <Container sx={{ mt: 4, height: "100%" }}>

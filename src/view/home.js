@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
@@ -9,6 +9,22 @@ import { useNavigate } from 'react-router-dom';
 export default function Home() {
     const [selectedItem, setSelectedItem] = useState(null);
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(!isLoading);
+        }, 500);
+    }, []);
+
+    if (isLoading) {
+        return (
+            <div className="loading-container">
+                <div className="loading-spinner"></div>
+                <div>Loading...</div>
+            </div>
+        );
+    }
 
     const handleItemClick = (index) => {
         setSelectedItem(index);
@@ -21,7 +37,7 @@ export default function Home() {
 
     const handleProductClick = (productId) => {
         navigate(`/product/${productId}`);
-      };
+    };
 
 
     const images = [

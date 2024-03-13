@@ -279,11 +279,132 @@
   border-radius: 5px;
 }
 
-.btn-add{
+.btn-add {
   padding: 2.5% 0;
   width: 100%;
   color: red;
   /* background-color: red; */
   border: 2px solid red;
   border-radius: 5px;
+}
+
+/* quanlity */
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+}
+
+.quantity-input {
+  width: 50px;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  padding: 8px;
+}
+
+.decrement-btn,
+.increment-btn {
+  background-color: #f0f0f0;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 8px 12px;
+}
+
+.select {
+  width: 80%;
+  padding: 2%;
+  font-size: 16px;
+  background-color: rgb(204, 204, 204);
+  color: black;
+  border: none;
+  position: relative;
+  z-index: 1;
+  outline: none;
+  padding: 1% 0;
+}
+
+/* popup */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+}
+
+.popup-container {
+  width: 35%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 999;
+  max-height: 80%;
+  /* Thiết lập chiều cao tối đa */
+  overflow-y: auto;
+}
+
+.modal-title {
+  margin: 0;
+  font-weight: 400;
+  font-size: 22px;
+}
+
+.image-instruction {
+  width: 100%;
+}
+
+.btn-instruction {
+  color: #FFF !important;
+  background: #555;
+  border-radius: 0px;
+  text-transform: uppercase;
+  border: none;
+  width: 200px;
+  height: 40px;
+  font-size: 15px;
+  font-weight: normal;
+  text-transform: uppercase;
+  color: #FFF !important;
+  display: block;
+  margin: auto;
+  text-align: center;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.btn-instruction:hover {
+  background-color: #f00;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #333;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
