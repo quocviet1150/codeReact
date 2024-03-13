@@ -63,7 +63,7 @@ export default function Home() {
         {
             id: 1,
             imagePath: require("../image/home/4.png"),
-            name: "Mô tả ảnh 1",
+            name: "Mô tả ảnh Mô tả ảnh Mô tả ảnh Mô tả ảnh Mô tả ảnh 1",
             price: 10.99
         },
         {
@@ -165,7 +165,7 @@ export default function Home() {
                         <div className="font_home">Winter Trend </div>
                         <div className="font_title">Discover now latest collection </div>
                         <div className="button_click">
-                            <button className="button" onClick={() => window.location.href = "http://localhost:3000/#product"}>shop now </button>
+                            <button className="button" onClick={() => window.location.href = "http://localhost:3000/product#product"}>shop now </button>
                         </div>
                     </div>
                 </div>
@@ -195,8 +195,8 @@ export default function Home() {
                         <div className="image-product" key={index}>
                             <a className="product-link" onClick={() => handleProductClick(image.id)}>
                                 <img className="product-image" src={image.imagePath} alt={image.name} />
-                                <p className="name">{image.name}</p>
-                                <p className="price">${image.price}</p>
+                                <p className="name" title={image.name}>{image.name}</p>
+                                <p className="price"><b>Price:</b> ${image.price}</p>
                             </a>
                         </div>
                     ))}
