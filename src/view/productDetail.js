@@ -164,23 +164,45 @@ const ProductDetail = () => {
 
                     <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', paddingTop: '1%' }}>
                         <div style={{ marginRight: '10px', borderRight: '1px solid #ccc', paddingRight: '5px' }}>
-                            <span>Đánh giá: </span>
+                            <span ><b>Đánh giá:</b> </span>
                             <span style={{ color: '#fadb14', marginRight: '5px' }}>★</span>
                             <span style={{ color: '#fadb14', marginRight: '5px' }}>★</span>
                             <span style={{ color: '#fadb14', marginRight: '5px' }}>★</span>
                             <span style={{ color: '#fadb14', marginRight: '5px' }}>★</span>
                             <span style={{ color: '#fadb14', marginRight: '5px' }}>★</span>
                         </div>
-                        <span style={{ marginRight: '10px', borderRight: '1px solid #ccc', paddingRight: '5px' }}>Phản hồi: {product.quantityFeedback}</span>
-                        <span style={{ marginRight: '10px' }}>Đã bán: {product.sellNumber}</span>
+                        <span style={{ marginRight: '10px', borderRight: '1px solid #ccc', paddingRight: '5px' }}><b>Phản hồi:</b> {product.quantityFeedback}</span>
+                        <span style={{ marginRight: '10px' }}><b>Đã bán:</b> {product.sellNumber}</span>
                     </div>
 
-                    <div style={{ padding: '2% 0', fontSize: '18px' }}>
-                        Giá bán: <div className='product-price'>${product.price}</div>
+                    <div style={{ padding: '4% 0 2% 0', fontSize: '18px' }}>
+                        <b>Giá bán:</b> <div className='product-price'>${product.price}</div>
                     </div>
+
+                    <div style={{ paddingBottom: '4%', display: 'flex' }}>
+                        <div style={{ fontSize: '18px', width: '20%' }}>
+                            <b>Chính sách trả hàng:</b>
+                        </div>
+                        <div style={{ fontSize: '16px', width: '80%' }}>
+                            <img style={{ height: '2vh', paddingRight: '2%' }} src={require("../image/home/free2.png")} alt={"test"} />
+                            Trả hàng 15 ngày <i style={{fontSize:'14px',paddingLeft:'3%'}}>Đổi ý miễn phí</i>
+
+                        </div>
+                    </div>
+
+                    <div style={{ paddingBottom: '4%', display: 'flex' }}>
+                        <div style={{ fontSize: '18px', width: '20%' }}>
+                            <b>Vận chuyển:</b>
+                        </div>
+                        <div style={{ fontSize: '16px', width: '80%' }}>
+                            <img style={{ height: '2vh', paddingRight: '2%' }} src={require("../image/home/free.png")} alt={"test"} />
+                            Miễn phí vận chuyển
+                        </div>
+                    </div>
+
                     <div style={{ borderBottom: '2px solid #ccc', paddingBottom: '2%' }}>
                         <div style={{ fontSize: '18px' }}>
-                            Mẫu khác<span style={{ color: 'red' }}> *</span>:
+                            <b>Mẫu khác<span style={{ color: 'red' }}> *</span>:</b>
                         </div>
                         <div className="product-images">
                             {images.map((image) => (
@@ -197,9 +219,9 @@ const ProductDetail = () => {
 
                     <div style={{ paddingTop: '4%' }}>
                         <div style={{ width: '50%', display: 'flex' }} >
-                            <div style={{ fontSize: '16px', width: '30%' }}>
-                                Size
-                                <span style={{ color: 'red' }}> *</span>:
+                            <div style={{ fontSize: '16px', width: '50%' }}>
+                                <b>Size
+                                    <span style={{ color: 'red' }}> *</span>:</b>
                             </div>
                             <div style={{ width: '70%' }}>
                                 <select className='select'>
@@ -213,7 +235,7 @@ const ProductDetail = () => {
                                     <option value="34">34</option>
                                 </select>
                                 <div>
-                                    <span style={{ fontSize: '14px', fontStyle: 'italic', color: 'red', paddingTop: '2%', cursor: 'pointer' }}
+                                    <span className='instruction'
                                         onClick={togglePopup}>
                                         Hướng dẫn chọn size</span>
                                     {isPopupVisible && <Instructions isPopupVisible={isPopupVisible} togglePopup={togglePopup} />}
@@ -222,8 +244,8 @@ const ProductDetail = () => {
                         </div>
 
                         <div style={{ width: '60%', paddingTop: '3%', display: 'flex', alignItems: 'center' }}>
-                            <div style={{ width: '30%', fontSize: '16px' }}>
-                                Số Lượng<span style={{ color: 'red' }}> *</span>:
+                            <div style={{ width: '40%', fontSize: '16px' }}>
+                                <b>Số Lượng<span style={{ color: 'red' }}> *</span>:</b>
                             </div>
                             <div className="quantity-selector">
                                 <button className="decrement-btn" onClick={decrementQuantity} style={{ background: '#ffffff', border: '1px solid #ccc', borderRight: 'none' }}>-</button>

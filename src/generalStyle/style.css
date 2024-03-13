@@ -263,6 +263,7 @@
   text-decoration: none;
   padding-left: 10px;
   padding-right: 10px;
+  font-weight: 700 !important;
 }
 
 .product-detail-view {
@@ -435,4 +436,17 @@
 .product-detail-view-total {
   width: 90%;
   padding-bottom: 1%;
+}
+
+.instruction {
+  font-size: 14px;
+  font-style: italic;
+  color: red;
+  padding-top: 2%;
+  cursor: pointer;
+}
+
+.instruction:hover {
+  font-size: 16px; /* Chỉnh kích thước chữ khi hover */
+  color: #2a0cb1;
 }
