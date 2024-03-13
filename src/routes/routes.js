@@ -9,6 +9,7 @@ import VerifyEmail from "../components/verifyEmail.component";
 import { ResetPassword } from "../components/resetPassword.component";
 import { ForgotPassword } from "../components/forgotPassword.component";
 import ProductDetail from "../view/productDetail";
+import Home from "../view/home";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ export const router = createBrowserRouter([
       { path: "verify-email", element: <VerifyEmail /> },
       { path: "reset-password", element: <ResetPassword /> },
       { path: "forgot-password", element: <ForgotPassword /> },
+      { path: "product", element: <Home /> },
       { path: "product/:id", element: <ProductDetail /> },
       {
         element: <RequireAuth />,

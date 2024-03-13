@@ -24,6 +24,10 @@ const ProductDetail = () => {
     }
 
     const imagePaths = {
+        0: [
+            require("../image/home/1.png"),
+            require("../image/home/2.png"),
+        ],
         1: [
             require("../image/home/1.png"),
             require("../image/home/2.png"),
@@ -46,27 +50,19 @@ const ProductDetail = () => {
         ]
     };
 
-    // const imagePaths = [
-    //     require("../image/home/1.png"),
-    //     require("../image/home/2.png"),
-    //     require("../image/home/3.png"),
-    //     require("../image/home/4.png"),
-    //     require("../image/home/4.png"),
-    //     require("../image/home/4.png"),
-    //     require("../image/home/4.png"),
-    // ];
-
     const { productId } = useParams();
     const [selectedItem, setSelectedItem] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [isPopupVisible, setPopupVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [selectedImagePath, setSelectedImagePath] = useState(product.path);
+    const [selectedProductId, setSelectedProductId] = useState(null);
+    const [selectedImagePath, setSelectedImagePath] = useState(null);
 
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(!isLoading);
         }, 500);
+        setSelectedImagePath(product.path);
     }, []);
 
     const togglePopup = () => {
@@ -95,10 +91,15 @@ const ProductDetail = () => {
     const handleItemClick = (index) => {
         setSelectedItem(index);
         if (index === 0) {
-            window.location.href = 'http://localhost:3000/#home';
+            window.location.href = 'http://localhost:3000/product#home';
         } else if (index === 1) {
-            window.location.href = 'http://localhost:3000/#product';
+            window.location.href = 'http://localhost:3000/product#product';
         }
+    };
+
+    const handleProductClick = (id, imagePath) => {
+        setSelectedProductId(id);
+        setSelectedImagePath(imagePath);
     };
 
     const handleImageClick = (path) => {
@@ -138,14 +139,14 @@ const ProductDetail = () => {
             </div>
 
             <div className="breadcrumb">
-                <Link to="/" className="breadcrumb-item-hover">Product</Link>
+                <Link to="/product" className="breadcrumb-item-hover">Product</Link>
                 <span className="breadcrumb-divider">/</span>
                 <span className="breadcrumb-item">{product.name}</span>
             </div>
 
             <div style={{ display: 'flex', marginLeft: '5%', padding: '0% 5%' }}>
                 <div style={{ width: "10%", height: '85vh', overflowY: 'auto', cursor: 'pointer' }}>
-                    {imagePaths.map((path, index) => (
+                    {(selectedProductId === null ? imagePaths[0] : imagePaths[selectedProductId]).map((path, index) => (
                         <img
                             key={index}
                             className="product-detail-view-total"
@@ -182,8 +183,14 @@ const ProductDetail = () => {
                             Mẫu khác<span style={{ color: 'red' }}> *</span>:
                         </div>
                         <div className="product-images">
-                            {images.map(image => (
-                                <img key={image.idDetail} className="product-detail-view" src={image.path} alt={`Shirt Store Image ${image.idDetail}`} />
+                            {images.map((image) => (
+                                <img
+                                    key={image.idDetail}
+                                    className="product-detail-view"
+                                    src={image.path}
+                                    alt={`Shirt Store Image ${image.idDetail}`}
+                                    onClick={() => handleProductClick(image.idDetail, image.path)}
+                                />
                             ))}
                         </div>
                     </div>

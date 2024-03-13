@@ -13,15 +13,15 @@ function App() {
     <>
       <GoogleOAuthProvider clientId="585540999470-rqmh6ang47qma66879fkhsgppi12q1ed.apps.googleusercontent.com">
         <Navigation />
-        {location.pathname === "/" ? (
+        {/* {location.pathname === "/" ? (
           <Container sx={{ mt: 4, height: "100%" }}>
             <Home />
           </Container>
-        ) : (
+        ) : ( */}
           <Container sx={{ mt: 4, height: "100%" }}>
             <Outlet />
           </Container>
-        )}
+        {/* )} */}
       </GoogleOAuthProvider>
     </>
   );
