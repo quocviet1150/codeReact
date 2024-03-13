@@ -265,7 +265,7 @@ const ProductDetail = () => {
 
                     </div>
 
-                    <div style={{ paddingTop: '4%', display: 'flex' }}>
+                    <div style={{ paddingTop: '4%', display: 'flex',paddingBottom:'5%' }}>
                         <div style={{ width: '50%', padding: ' 0 2.5%' }}>
                             <button className='btn-signup'><FontAwesomeIcon icon={faShoppingBasket} /> Mua hàng</button>
                         </div>
@@ -274,6 +274,8 @@ const ProductDetail = () => {
                         </div>
 
                     </div>
+
+                    <div style={{ borderBottom: '1px solid #ccc', paddingBottom: '0%' }}></div>
 
                 </div>
             </div>
