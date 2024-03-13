@@ -5,17 +5,37 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export default function Home() {
     const [selectedItem, setSelectedItem] = useState(null);
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
+    const [data, setData] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
+        // fetchData();
+
+        // cái setTimeout xóa đi khi calll api
         setTimeout(() => {
             setIsLoading(!isLoading);
         }, 500);
     }, []);
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('http://your-backend-api-url');
+            setData(response.data);
+            setIsLoading(!isLoading);
+        } catch (error) {
+            setError(error);
+            setIsLoading(!isLoading);
+        }
+    };
+
+    //  khi call data thì cái item sẽ được lấy theo : "{kiểu.id}"
+    // if (error) return <div>Error: {error.message}</div>;
 
     if (isLoading) {
         return (
@@ -38,7 +58,6 @@ export default function Home() {
     const handleProductClick = (productId) => {
         navigate(`/product/${productId}`);
     };
-
 
     const images = [
         {

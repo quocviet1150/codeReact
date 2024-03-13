@@ -50,7 +50,7 @@ const ProductDetail = () => {
         ]
     };
 
-    const { productId } = useParams();
+    const { id } = useParams();
     const [selectedItem, setSelectedItem] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [isPopupVisible, setPopupVisible] = useState(false);
@@ -59,11 +59,30 @@ const ProductDetail = () => {
     const [selectedImagePath, setSelectedImagePath] = useState(null);
 
     useEffect(() => {
+        // fetchProductDetail();
+
+        // cái setTimeout xóa đi khi calll api
         setTimeout(() => {
             setIsLoading(!isLoading);
         }, 500);
         setSelectedImagePath(product.path);
-    }, []);
+    }, [id]);
+
+    // const fetchProductDetail = async () => {
+    //     try {
+    //         const response = await axios.get(`http://your-backend-api-url/products/${id}`);
+    //         const productData = response.data;
+
+    //         setSelectedItem(productData);
+    //         setSelectedImagePath(productData.path);
+    //         setIsLoading(!isLoading);
+    //     } catch (error) {
+    //         console.error('Error fetching product detail:', error);
+    //         setIsLoading(isLoading);
+    //     }
+    // };
+
+    //  khi call data thì cái item sẽ được lấy kiểu : "{productData.id}"
 
     const togglePopup = () => {
         setPopupVisible(!isPopupVisible);
@@ -185,7 +204,7 @@ const ProductDetail = () => {
                         </div>
                         <div style={{ fontSize: '16px', width: '80%' }}>
                             <img style={{ height: '2vh', paddingRight: '2%' }} src={require("../image/home/free2.png")} alt={"test"} />
-                            Trả hàng 15 ngày <i style={{fontSize:'14px',paddingLeft:'3%'}}>Đổi ý miễn phí</i>
+                            Trả hàng 15 ngày <i style={{ fontSize: '14px', paddingLeft: '3%' }}>Đổi ý miễn phí</i>
 
                         </div>
                     </div>
@@ -265,7 +284,7 @@ const ProductDetail = () => {
 
                     </div>
 
-                    <div style={{ paddingTop: '4%', display: 'flex',paddingBottom:'5%' }}>
+                    <div style={{ paddingTop: '4%', display: 'flex', paddingBottom: '5%' }}>
                         <div style={{ width: '50%', padding: ' 0 2.5%' }}>
                             <button className='btn-signup'><FontAwesomeIcon icon={faShoppingBasket} /> Mua hàng</button>
                         </div>
