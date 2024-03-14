@@ -5,17 +5,37 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export default function Home() {
     const [selectedItem, setSelectedItem] = useState(null);
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
+    const [data, setData] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
+        // fetchData();
+
+        // cái setTimeout xóa đi khi calll api
         setTimeout(() => {
             setIsLoading(!isLoading);
         }, 500);
     }, []);
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('http://your-backend-api-url');
+            setData(response.data);
+            setIsLoading(!isLoading);
+        } catch (error) {
+            setError(error);
+            setIsLoading(!isLoading);
+        }
+    };
+
+    //  khi call data thì cái item sẽ được lấy theo : "{kiểu.id}"
+    // if (error) return <div>Error: {error.message}</div>;
 
     if (isLoading) {
         return (
@@ -39,12 +59,11 @@ export default function Home() {
         navigate(`/product/${productId}`);
     };
 
-
     const images = [
         {
             id: 1,
             imagePath: require("../image/home/4.png"),
-            name: "Mô tả ảnh 1",
+            name: "Mô tả ảnh Mô tả ảnh Mô tả ảnh Mô tả ảnh Mô tả ảnh 1",
             price: 10.99
         },
         {
@@ -158,7 +177,7 @@ export default function Home() {
                         <div className="font_home">Winter Trend </div>
                         <div className="font_title">Discover now latest collection </div>
                         <div className="button_click">
-                            <button className="button" onClick={() => window.location.href = "http://localhost:3000/#product"}>shop now </button>
+                            <button className="button" onClick={() => window.location.href = "http://localhost:3000/product#product"}>shop now </button>
                         </div>
                     </div>
                 </div>
@@ -188,8 +207,8 @@ export default function Home() {
                         <div className="image-product" key={index}>
                             <a className="product-link" onClick={() => handleProductClick(image.id)}>
                                 <img className="product-image" src={image.imagePath} alt={image.name} />
-                                <p className="name">{image.name}</p>
-                                <p className="price">${image.price}</p>
+                                <p className="name" title={image.name}>{image.name}</p>
+                                <p className="price"><b>Price:</b> ${image.price}</p>
                             </a>
                         </div>
                     ))}

@@ -50,20 +50,40 @@ const ProductDetail = () => {
         ]
     };
 
-    const { productId } = useParams();
+    const { id } = useParams();
     const [selectedItem, setSelectedItem] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [isPopupVisible, setPopupVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedProductId, setSelectedProductId] = useState(null);
     const [selectedImagePath, setSelectedImagePath] = useState(null);
+    const [selectedSize, setSelectedSize] = useState('');
 
     useEffect(() => {
+        // fetchProductDetail();
+
+        // cái setTimeout xóa đi khi calll api
         setTimeout(() => {
             setIsLoading(!isLoading);
         }, 500);
         setSelectedImagePath(product.path);
-    }, []);
+    }, [id]);
+
+    // const fetchProductDetail = async () => {
+    //     try {
+    //         const response = await axios.get(`http://your-backend-api-url/products/${id}`);
+    //         const productData = response.data;
+
+    //         setSelectedItem(productData);
+    //         setSelectedImagePath(productData.path);
+    //         setIsLoading(!isLoading);
+    //     } catch (error) {
+    //         console.error('Error fetching product detail:', error);
+    //         setIsLoading(isLoading);
+    //     }
+    // };
+
+    //  khi call data thì cái item sẽ được lấy kiểu : "{productData.id}"
 
     const togglePopup = () => {
         setPopupVisible(!isPopupVisible);
@@ -104,6 +124,11 @@ const ProductDetail = () => {
 
     const handleImageClick = (path) => {
         setSelectedImagePath(path);
+    };
+
+     const handleSizeChange = (event) => {
+        setSelectedSize(event.target.value);
+        console.log(event.target.value);
     };
 
     return (
@@ -164,45 +189,45 @@ const ProductDetail = () => {
 
                     <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', paddingTop: '1%' }}>
                         <div style={{ marginRight: '10px', borderRight: '1px solid #ccc', paddingRight: '5px' }}>
-                            <span ><b>Đánh giá:</b> </span>
+                            <span ><b>Evaluate: </b> </span>
                             <span style={{ color: '#fadb14', marginRight: '5px' }}>★</span>
                             <span style={{ color: '#fadb14', marginRight: '5px' }}>★</span>
                             <span style={{ color: '#fadb14', marginRight: '5px' }}>★</span>
                             <span style={{ color: '#fadb14', marginRight: '5px' }}>★</span>
                             <span style={{ color: '#fadb14', marginRight: '5px' }}>★</span>
                         </div>
-                        <span style={{ marginRight: '10px', borderRight: '1px solid #ccc', paddingRight: '5px' }}><b>Phản hồi:</b> {product.quantityFeedback}</span>
-                        <span style={{ marginRight: '10px' }}><b>Đã bán:</b> {product.sellNumber}</span>
+                        <span style={{ marginRight: '10px', borderRight: '1px solid #ccc', paddingRight: '5px' }}><b>Feedback:</b> {product.quantityFeedback}</span>
+                        <span style={{ marginRight: '10px' }}><b>Sold:</b> {product.sellNumber}</span>
                     </div>
 
                     <div style={{ padding: '4% 0 2% 0', fontSize: '18px' }}>
-                        <b>Giá bán:</b> <div className='product-price'>${product.price}</div>
+                        <b>Price:</b> <div className='product-price'>${product.price}</div>
                     </div>
 
                     <div style={{ paddingBottom: '4%', display: 'flex' }}>
                         <div style={{ fontSize: '18px', width: '20%' }}>
-                            <b>Chính sách trả hàng:</b>
+                            <b>Return policy</b>
                         </div>
                         <div style={{ fontSize: '16px', width: '80%' }}>
                             <img style={{ height: '2vh', paddingRight: '2%' }} src={require("../image/home/free2.png")} alt={"test"} />
-                            Trả hàng 15 ngày <i style={{fontSize:'14px',paddingLeft:'3%'}}>Đổi ý miễn phí</i>
+                            Returns within 15 days <i style={{ fontSize: '14px', paddingLeft: '3%' }}>Change your mind for free</i>
 
                         </div>
                     </div>
 
                     <div style={{ paddingBottom: '4%', display: 'flex' }}>
                         <div style={{ fontSize: '18px', width: '20%' }}>
-                            <b>Vận chuyển:</b>
+                            <b>Transport:</b>
                         </div>
                         <div style={{ fontSize: '16px', width: '80%' }}>
                             <img style={{ height: '2vh', paddingRight: '2%' }} src={require("../image/home/free.png")} alt={"test"} />
-                            Miễn phí vận chuyển
+                            Free shipping
                         </div>
                     </div>
 
                     <div style={{ borderBottom: '2px solid #ccc', paddingBottom: '2%' }}>
                         <div style={{ fontSize: '18px' }}>
-                            <b>Mẫu khác<span style={{ color: 'red' }}> *</span>:</b>
+                            <b>Other models<span style={{ color: 'red' }}> *</span>:</b>
                         </div>
                         <div className="product-images">
                             {images.map((image) => (
@@ -223,9 +248,9 @@ const ProductDetail = () => {
                                 <b>Size
                                     <span style={{ color: 'red' }}> *</span>:</b>
                             </div>
-                            <div style={{ width: '70%' }}>
-                                <select className='select'>
-                                    <option selected value="27">27</option>
+                            <div style={{ width: '100%' }}>
+                                <select className='select' value={selectedSize} onChange={handleSizeChange}>
+                                    <option value="27">27</option>
                                     <option value="28">28</option>
                                     <option value="29">29</option>
                                     <option value="30">30</option>
@@ -237,7 +262,7 @@ const ProductDetail = () => {
                                 <div>
                                     <span className='instruction'
                                         onClick={togglePopup}>
-                                        Hướng dẫn chọn size</span>
+                                        Instructions for choosing size</span>
                                     {isPopupVisible && <Instructions isPopupVisible={isPopupVisible} togglePopup={togglePopup} />}
                                 </div>
                             </div>
@@ -245,7 +270,7 @@ const ProductDetail = () => {
 
                         <div style={{ width: '60%', paddingTop: '3%', display: 'flex', alignItems: 'center' }}>
                             <div style={{ width: '40%', fontSize: '16px' }}>
-                                <b>Số Lượng<span style={{ color: 'red' }}> *</span>:</b>
+                                <b>Quantity<span style={{ color: 'red' }}> *</span>:</b>
                             </div>
                             <div className="quantity-selector">
                                 <button className="decrement-btn" onClick={decrementQuantity} style={{ background: '#ffffff', border: '1px solid #ccc', borderRight: 'none' }}>-</button>
@@ -260,17 +285,17 @@ const ProductDetail = () => {
                                 <button className="increment-btn" onClick={incrementQuantity} style={{ background: '#ffffff', border: '1px solid #ccc', borderLeft: 'none' }}>+</button>
                             </div>
 
-                            <div style={{ paddingLeft: '5%' }}>{product.quantityRemaining} sản phẩm có sẵn</div>
+                            <div style={{ paddingLeft: '5%' }}>{product.quantityRemaining} products available</div>
                         </div>
 
                     </div>
 
-                    <div style={{ paddingTop: '4%', display: 'flex',paddingBottom:'5%' }}>
+                    <div style={{ paddingTop: '4%', display: 'flex', paddingBottom: '5%' }}>
                         <div style={{ width: '50%', padding: ' 0 2.5%' }}>
-                            <button className='btn-signup'><FontAwesomeIcon icon={faShoppingBasket} /> Mua hàng</button>
+                            <button className='btn-signup'><FontAwesomeIcon icon={faShoppingBasket} /> Purchase</button>
                         </div>
                         <div style={{ width: '45%', padding: '0% 0 0 6.5%' }}>
-                            <button className='btn-add'><FontAwesomeIcon icon={faPlus} /> Thêm vào giỏ hàng</button>
+                            <button className='btn-add'><FontAwesomeIcon icon={faPlus} /> Add to cart</button>
                         </div>
 
                     </div>

@@ -224,12 +224,7 @@
   padding: 0.5% 0%;
 }
 
-.description {
-  padding-top: 1%;
-}
-
 .price {
-  font-weight: 600;
   margin-bottom: 0;
 }
 
@@ -446,6 +441,15 @@
 }
 
 .instruction:hover {
-  font-size: 16px; /* Chỉnh kích thước chữ khi hover */
+  font-size: 16px; 
   color: #2a0cb1;
 }
+
+.name {
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
