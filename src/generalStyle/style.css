@@ -178,6 +178,7 @@
 
 .image_two {
   height: 32vh;
+  width: 85%;
 }
 
 .title-product {
@@ -191,16 +192,14 @@
   width: 90%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: start;
   margin-left: 5%;
 }
 
 .image-product {
-  width: calc(19% - 10px);
-  /* Độ rộng - khoảng cách margin-right */
+  width: calc(16%);
   margin-bottom: 20px;
   margin-right: 10px;
-  /* Khoảng cách giữa các ảnh */
   padding: 0 0.5%;
   transition: transform 0.3s ease-in-out;
   border: 2px solid #ccc;

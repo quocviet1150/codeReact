@@ -49,58 +49,70 @@ export default function Home() {
         },
         {
             id: 2,
-            imagePath: require("../image/home/4.png"),
+            imagePath: require("../image/home/5.png"),
             name: "Mô tả ảnh 2",
             price: 15.99
         },
         {
             id: 3,
-            imagePath: require("../image/home/4.png"),
+            imagePath: require("../image/home/6.png"),
             name: "Mô tả ảnh 3",
             price: 15.99
         },
         {
             id: 4,
-            imagePath: require("../image/home/4.png"),
+            imagePath: require("../image/home/7.png"),
             name: "Mô tả ảnh 4",
             price: 15.99
         },
         {
             id: 5,
-            imagePath: require("../image/home/4.png"),
+            imagePath: require("../image/home/8.png"),
             name: "Mô tả ảnh 5",
             price: 15.99
         },
         {
             id: 6,
-            imagePath: require("../image/home/4.png"),
+            imagePath: require("../image/home/9.png"),
             name: "Mô tả ảnh 6",
             price: 15.99
         },
         {
             id: 7,
-            imagePath: require("../image/home/4.png"),
+            imagePath: require("../image/home/10.png"),
             name: "Mô tả ảnh 7",
             price: 15.99
         },
         {
             id: 8,
-            imagePath: require("../image/home/4.png"),
+            imagePath: require("../image/home/11.png"),
             name: "Mô tả ảnh 8",
             price: 15.99
         },
         {
             id: 9,
-            imagePath: require("../image/home/4.png"),
+            imagePath: require("../image/home/12.png"),
             name: "Mô tả ảnh 9",
             price: 15.99
         },
         {
             id: 10,
-            imagePath: require("../image/home/4.png"),
+            imagePath: require("../image/home/13.png"),
             name: "Mô tả ảnh 10",
             price: 15.99
         },
+        {
+            id: 11,
+            imagePath: require("../image/home/13.png"),
+            name: "Mô tả ảnh 10",
+            price: 15.99
+        },
+        // {
+        //     id: 12,
+        //     imagePath: require("../image/home/13.png"),
+        //     name: "Mô tả ảnh 10",
+        //     price: 15.99
+        // },
     ];
 
 
@@ -162,7 +174,7 @@ export default function Home() {
                     </div>
 
                     <div className="image_child2">
-                        <img className="image_two" src={require("../image/home/3.png")} alt="Shirt Store Logo" />
+                        <img className="image_two" src={require("../image/home/8.png")} alt="Shirt Store Logo" />
                     </div>
 
                 </div>

@@ -17,7 +17,7 @@ const ProductDetail = () => {
     {
         name: "Quần kaki túi nhỏ kiểu form slimfit QK026 màu xám",
         price: 10.99,
-        path: require("../image/home/4.png"),
+        path: require("../image/home/3.png"),
         quantityRemaining: 100,
         quantityFeedback: 50,
         sellNumber: 500
