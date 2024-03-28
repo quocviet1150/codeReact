@@ -2,12 +2,9 @@
   width: 100%;
   background: antiquewhite;
   position: -webkit-sticky;
-  /* Cho Safari */
   position: sticky;
   top: 0;
-  /* Vị trí cố định ở đỉnh trang */
   z-index: 1000;
-  /* Đảm bảo phần tử gắn cố định hiển thị trên các phần tử khác */
 }
 
 .header {
@@ -441,7 +438,7 @@
 }
 
 .instruction:hover {
-  font-size: 16px; 
+  font-size: 16px;
   color: #2a0cb1;
 }
 
@@ -453,3 +450,163 @@
   max-width: 200px;
 }
 
+.color-picker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+}
+
+.color-black {
+  width: 60px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  height: 30px;
+  background-color: darkgray;
+  border-radius: 10%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.color-black:hover {
+  transform: scale(1.1);
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.search-input {
+  padding: 10px;
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 500px;
+}
+
+.search-button {
+  background-color: #f05a28;
+  color: #fff;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: #d35400;
+}
+
+.fa-search {
+  font-size: 18px;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  /* Tạo khoảng cách với các phần khác trên trang */
+}
+
+.cart-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cart-table th,
+.cart-table td {
+  border: 1px solid #e0e0e0;
+  padding: 12px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.cart-table th.product-column,
+.cart-table th.action-column {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.cart-table th.product-column,
+.cart-table th.action-column,
+.cart-table td {
+  white-space: nowrap;
+  /* Không cho phần tử tràn ra khỏi ô */
+}
+
+.cart-table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.cart-table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+.cart-table button {
+  padding: 6px 12px;
+  background-color: transparent;
+  color: #f05a28;
+  border: 1px solid #f05a28;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.cart-table button:hover {
+  background-color: #f05a28;
+  color: #fff;
+}
+
+.product-info {
+  display: flex;
+  align-items: center;
+}
+
+.product-info img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.color-img {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  padding: 20px;
+  z-index: 999;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.popup button {
+  margin: 0 10px;
+  padding: 8px 20px;
+  background-color: #f05a28;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.popup button:hover {
+  background-color: #d0401e;
+}

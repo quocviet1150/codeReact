@@ -1,11 +1,8 @@
+import { faSearch, faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState, useEffect } from 'react';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
     const [selectedItem, setSelectedItem] = useState(null);
@@ -37,14 +34,14 @@ export default function Home() {
     //  khi call data thì cái item sẽ được lấy theo : "{kiểu.id}"
     // if (error) return <div>Error: {error.message}</div>;
 
-    if (isLoading) {
-        return (
-            <div className="loading-container">
-                <div className="loading-spinner"></div>
-                <div>Loading...</div>
-            </div>
-        );
-    }
+    // if (isLoading) {
+    //     return (
+    //         <div className="loading-container">
+    //             <div className="loading-spinner"></div>
+    //             <div>Loading...</div>
+    //         </div>
+    //     );
+    // }
 
     const handleItemClick = (index) => {
         setSelectedItem(index);
@@ -57,6 +54,10 @@ export default function Home() {
 
     const handleProductClick = (productId) => {
         navigate(`/product/${productId}`);
+    };
+
+    const handleCart = () => {
+        navigate(`/product/cart`);
     };
 
     const images = [
@@ -154,15 +155,11 @@ export default function Home() {
                     </div>
 
                     <div className="cart">
-                        <FontAwesomeIcon icon={faShoppingCart} className="search-icon" />
+                        <FontAwesomeIcon icon={faShoppingCart} className="search-icon" onClick={() => handleCart()} />
                     </div>
 
                     <div className="cart">
                         <FontAwesomeIcon icon={faUser} className="search-icon" />
-                    </div>
-
-                    <div className="cart">
-                        <FontAwesomeIcon icon={faHeart} className="search-icon" />
                     </div>
                 </div>
             </div>

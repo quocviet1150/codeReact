@@ -6,13 +6,6 @@ import Instructions from "./instructions";
 import { Link } from 'react-router-dom';
 
 const ProductDetail = () => {
-    const images = [
-        { idDetail: 1, path: require("../image/home/4.png") },
-        { idDetail: 2, path: require("../image/home/2.png") },
-        { idDetail: 3, path: require("../image/home/1.png") },
-        { idDetail: 4, path: require("../image/home/3.png") }
-    ];
-
     const product =
     {
         name: "Quần kaki túi nhỏ kiểu form slimfit QK026 màu xám",
@@ -99,14 +92,18 @@ const ProductDetail = () => {
         }
     };
 
-    if (isLoading) {
-        return (
-            <div className="loading-container">
-                <div className="loading-spinner"></div>
-                <div>Loading...</div>
-            </div>
-        );
-    }
+    // if (isLoading) {
+    //     return (
+    //         <div className="loading-container">
+    //             <div className="loading-spinner"></div>
+    //             <div>Loading...</div>
+    //         </div>
+    //     );
+    // }
+
+    const handleCart = () => {
+        navigate(`/product/cart`);
+    };
 
     const handleItemClick = (index) => {
         setSelectedItem(index);
@@ -150,15 +147,11 @@ const ProductDetail = () => {
                     </div>
 
                     <div className="cart">
-                        <FontAwesomeIcon icon={faShoppingCart} className="search-icon" />
+                        <FontAwesomeIcon icon={faShoppingCart} className="search-icon" onClick={() => handleCart()}/>
                     </div>
 
                     <div className="cart">
                         <FontAwesomeIcon icon={faUser} className="search-icon" />
-                    </div>
-
-                    <div className="cart">
-                        <FontAwesomeIcon icon={faHeart} className="search-icon" />
                     </div>
                 </div>
             </div>
@@ -229,16 +222,13 @@ const ProductDetail = () => {
                         <div style={{ fontSize: '18px' }}>
                             <b>Other models<span style={{ color: 'red' }}> *</span>:</b>
                         </div>
-                        <div className="product-images">
-                            {images.map((image) => (
-                                <img
-                                    key={image.idDetail}
-                                    className="product-detail-view"
-                                    src={image.path}
-                                    alt={`Shirt Store Image ${image.idDetail}`}
-                                    onClick={() => handleProductClick(image.idDetail, image.path)}
-                                />
-                            ))}
+                        <div class="color-picker">
+                            <a class="color-black">Xanh</a>
+                            <a class="color-black">Đỏ</a>
+                            <a class="color-black">Trắng</a>
+                            <a class="color-black">Tím</a>
+                            <a class="color-black">Vàng</a>
+                            <a class="color-black">Đen</a>
                         </div>
                     </div>
 
