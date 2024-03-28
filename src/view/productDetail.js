@@ -1,9 +1,8 @@
-import { faHeart, faPlus, faSearch, faShoppingBasket, faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSearch, faShoppingBasket, faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Instructions from "./instructions";
-import { Link } from 'react-router-dom';
 
 const ProductDetail = () => {
     const product =
@@ -50,7 +49,10 @@ const ProductDetail = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [selectedProductId, setSelectedProductId] = useState(null);
     const [selectedImagePath, setSelectedImagePath] = useState(null);
-    const [selectedSize, setSelectedSize] = useState('');
+    const [selectedSize, setSelectedSize] = useState('27');
+    const navigate = useNavigate();
+    const [selectedColor, setSelectedColor] = useState(null);
+    const [cart, setCart] = useState([]);
 
     useEffect(() => {
         // fetchProductDetail();
@@ -105,6 +107,11 @@ const ProductDetail = () => {
         navigate(`/product/cart`);
     };
 
+    const handleSizeChange = (e) => {
+        setSelectedSize(e.target.value);
+        console.log(e.target.value);
+    };
+
     const handleItemClick = (index) => {
         setSelectedItem(index);
         if (index === 0) {
@@ -114,32 +121,46 @@ const ProductDetail = () => {
         }
     };
 
-    const handleProductClick = (id, imagePath) => {
-        setSelectedProductId(id);
-        setSelectedImagePath(imagePath);
-    };
-
     const handleImageClick = (path) => {
         setSelectedImagePath(path);
     };
 
-     const handleSizeChange = (event) => {
-        setSelectedSize(event.target.value);
-        console.log(event.target.value);
+    const handleColorChange = (color) => {
+        setSelectedColor(color);
+        console.log(`Bạn đã chọn màu: ${color}`);
+    };
+
+    const handleAddToCart = () => {
+        if (!selectedColor) {
+            alert('Vui lòng chọn màu trước khi thêm vào giỏ hàng.');
+            return;
+        }
+        const newItem = {
+            id: id,
+            image: product.path,
+            color: selectedColor,
+            price: product.price,
+            size: selectedSize,
+            quantity: quantity,
+            total: quantity * product.price
+        };
+        console.log(newItem);
+        setCart([...cart, newItem]);
+        alert('Thêm vào giỏ hàng thành công.');
     };
 
     return (
         <>
             <div className="header_1">
                 <div className="header">
-                    <div className="logo-container" onClick={() => window.location.href = "http://localhost:3000"}>
+                    <div className="logo-container" onClick={() => window.location.href = "http://localhost:3000/product"}>
                         <img className="logo" src="https://img.freepik.com/premium-vector/tshirt-logo-clothing-logo-apparel-store-icon-fashion-logo-design-tshirt-icon-template_657888-112.jpg" alt="Shirt Store Logo" />
                         <span className="store-name">Shirt Store</span>
                     </div>
                     <div className="menu">
                         <ul>
-                            <li className={selectedItem === 0 ? 'selected' : ''} onClick={() => handleItemClick(0)}><a href="#home">Home</a></li>
-                            <li className={selectedItem === 1 ? 'selected' : ''} onClick={() => handleItemClick(1)}><a href="#product">Product</a></li>
+                            <li className={selectedItem === 0 ? 'selected' : ''} onClick={() => handleItemClick(0)}><a href="http://localhost:3000/product">Home</a></li>
+                            <li className={selectedItem === 1 ? 'selected' : ''} onClick={() => handleItemClick(1)}><a href="http://localhost:3000/product">Product</a></li>
                         </ul>
                     </div>
                     <div className="cart">
@@ -147,7 +168,7 @@ const ProductDetail = () => {
                     </div>
 
                     <div className="cart">
-                        <FontAwesomeIcon icon={faShoppingCart} className="search-icon" onClick={() => handleCart()}/>
+                        <FontAwesomeIcon icon={faShoppingCart} className="search-icon" onClick={() => handleCart()} />
                     </div>
 
                     <div className="cart">
@@ -222,13 +243,13 @@ const ProductDetail = () => {
                         <div style={{ fontSize: '18px' }}>
                             <b>Other models<span style={{ color: 'red' }}> *</span>:</b>
                         </div>
-                        <div class="color-picker">
-                            <a class="color-black">Xanh</a>
-                            <a class="color-black">Đỏ</a>
-                            <a class="color-black">Trắng</a>
-                            <a class="color-black">Tím</a>
-                            <a class="color-black">Vàng</a>
-                            <a class="color-black">Đen</a>
+                        <div className="color-picker">
+                            <a className={selectedColor === 'Xanh' ? 'color-selected' : 'color-black'} onClick={() => handleColorChange('Xanh')}>Xanh</a>
+                            <a className={selectedColor === 'Đỏ' ? 'color-selected' : 'color-black'} onClick={() => handleColorChange('Đỏ')}>Đỏ</a>
+                            <a className={selectedColor === 'Trắng' ? 'color-selected' : 'color-black'} onClick={() => handleColorChange('Trắng')}>Trắng</a>
+                            <a className={selectedColor === 'Tím' ? 'color-selected' : 'color-black'} onClick={() => handleColorChange('Tím')}>Tím</a>
+                            <a className={selectedColor === 'Vàng' ? 'color-selected' : 'color-black'} onClick={() => handleColorChange('Vàng')}>Vàng</a>
+                            <a className={selectedColor === 'Đen' ? 'color-selected' : 'color-black'} onClick={() => handleColorChange('Đen')}>Đen</a>
                         </div>
                     </div>
 
@@ -284,7 +305,7 @@ const ProductDetail = () => {
                         <div style={{ width: '50%', padding: ' 0 2.5%' }}>
                             <button className='btn-signup'><FontAwesomeIcon icon={faShoppingBasket} /> Purchase</button>
                         </div>
-                        <div style={{ width: '45%', padding: '0% 0 0 6.5%' }}>
+                        <div style={{ width: '45%', padding: '0% 0 0 6.5%' }} onClick={handleAddToCart}>
                             <button className='btn-add'><FontAwesomeIcon icon={faPlus} /> Add to cart</button>
                         </div>
 

@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useState } from 'react';
 
 export default function Cart() {
-
+    const [isLoading, setIsLoading] = useState(true);
     const [selectAll, setSelectAll] = useState(false);
     const [products, setProducts] = useState([
-        { id: 1, name: 'Tên sản phẩm 1', color: 'Xanh', price: '100,000 VND', quantity: 2, total: '200,000 VND' },
-        { id: 2, name: 'Tên sản phẩm 2', color: 'Đỏ', price: '150,000 VND', quantity: 1, total: '150,000 VND' }
+        { id: 1, name: 'Tên sản phẩm 1', color: 'Xanh', size: '27', price: '100,000 VND', quantity: 2, total: '200,000 VND' },
+        { id: 2, name: 'Tên sản phẩm 2', color: 'Đỏ', size: '30', price: '150,000 VND', quantity: 1, total: '150,000 VND' }
     ]);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [productToDelete, setProductToDelete] = useState(null);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(!isLoading);
+        }, 500);
+    }, []);
+
+    //   if (isLoading) {
+    //     return (
+    //         <div className="loading-container">
+    //             <div className="loading-spinner"></div>
+    //             <div>Loading...</div>
+    //         </div>
+    //     );
+    // }
 
     const handleSelectAll = (e) => {
         setSelectAll(e.target.checked);
@@ -23,6 +38,7 @@ export default function Cart() {
         );
         setProducts(updatedProducts);
         setSelectAll(updatedProducts.every(product => product.checked));
+        console.log(updatedProducts);
     };
 
     const handleDelete = () => {
@@ -66,9 +82,10 @@ export default function Cart() {
                 <table>
                     <thead>
                         <tr>
-                        <th><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>
+                            <th><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>
                             <th>Sản phẩm</th>
                             <th>Màu sắc</th>
+                            <th>Size</th>
                             <th>Giá</th>
                             <th>Số lượng</th>
                             <th>Tổng cộng</th>
@@ -86,6 +103,7 @@ export default function Cart() {
                                     </div>
                                 </td>
                                 <td>{product.color}</td>
+                                <td>{product.size}</td>
                                 <td>{product.price}</td>
                                 <td>{product.quantity}</td>
                                 <td>{product.total}</td>
@@ -95,14 +113,14 @@ export default function Cart() {
                     </tbody>
                 </table>
                 {showConfirmation && (
-                <div className="popup">
-                    <div className="popup-content">
-                        <p>Bạn chắc chắn muốn xóa sản phẩm này ?</p>
-                        <button onClick={handleDelete}>Xóa</button>
-                        <button onClick={closeConfirmation}>Hủy</button>
+                    <div className="popup">
+                        <div className="popup-content">
+                            <p>Bạn chắc chắn muốn xóa sản phẩm này ?</p>
+                            <button onClick={handleDelete}>Xóa</button>
+                            <button onClick={closeConfirmation}>Hủy</button>
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
             </div>
 
         </>
