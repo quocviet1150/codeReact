@@ -25,3 +25,11 @@ export const searchCartStart = (name) => {
     payload: name,
   };
 };
+
+export const productCheck = (cartIds) => {
+  return {
+    type: "PRODUCT_CHECK",
+    payload: cartIds,
+  };
+};
+

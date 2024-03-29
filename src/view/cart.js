@@ -2,19 +2,18 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteCart, searchCart, searchCartStart } from '../store/actions/cart';
+import { deleteCart, productCheck, productCheckFilter, searchCart, searchCartStart } from '../store/actions/cart';
 
 export default function Cart() {
     const [isLoading, setIsLoading] = useState(true);
+    const [listChecked, setListChecked] = useState([]);
     const [search, setSearch] = useState(false);
     const [keySearch, setKeySerch] = useState("");
     const [selectAll, setSelectAll] = useState(false);
-    const [showConfirmation, setShowConfirmation] = useState(false);
-    const [productToDelete, setProductToDelete] = useState(null);
-    const {products} = useSelector(state=>state.cart)
-    const {productSearch}= useSelector(state=>state.cart)
-    console.log("🚀 ~ Cart ~ productSearch:", productSearch)
-    const disptach = useDispatch()
+    const { products } = useSelector(state => state.cart)
+    const { productSearch } = useSelector(state => state.cart)
+    const { productChecked } = useSelector(state => state.cart)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         setTimeout(() => {
@@ -32,33 +31,52 @@ export default function Cart() {
     // }
 
     const handleSelectAll = (e) => {
-        setSelectAll(e.target?.checked);
-        // setProducts(products.map(product => ({ ...product, checked: e.target?.checked })));
+        const isChecked = e.target.checked;
+        if (isChecked) {
+            const allCartIds = products.map(product => product.cartId);
+            setListChecked(allCartIds);
+            dispatch(productCheck(allCartIds));
+        } else {
+            setListChecked([]);
+            dispatch(productCheck([]));
+        }
+        setSelectAll(!selectAll)
     };
 
-    const handleCheckboxChange = (e, productId) => {
-        const updatedProducts = products.map(product =>
-            product?.id === productId ? { ...product, checked: e.target?.checked } : product
-        );
-        // setProducts(updatedProducts);
-        setSelectAll(updatedProducts.every(product => product?.checked));
-        console.log(updatedProducts);
+
+
+    const handleCheckboxChange = (e) => {
+        const newValue = e.target.value;
+        const isChecked = e.target.checked;
+        if (isChecked) {
+            setListChecked(prevListChecked => {
+                const updatedList = [...prevListChecked, newValue];
+                dispatch(productCheck(updatedList));
+                return updatedList;
+            });
+        } else {
+            setListChecked(prevListChecked => {
+                const updatedList = prevListChecked.filter(item => item !== newValue);
+                dispatch(productCheck(updatedList));
+                return updatedList;
+            });
+        }
     };
 
     const openConfirmation = (productId) => {
-        disptach(deleteCart(productId))
+        dispatch(deleteCart(productId))
     };
 
     const handleSearch = () => {
-        console.log(keySearch.length );
-        disptach(searchCartStart())
-        disptach(searchCart(keySearch))
+        console.log(keySearch.length);
+        dispatch(searchCartStart())
+        dispatch(searchCart(keySearch))
         setSearch(true)
-   
+
     };
     const handelSearchChange = (e) => {
         setKeySerch(e.target.value)
-        
+
     };
 
     return (
@@ -75,10 +93,10 @@ export default function Cart() {
                         </div>
                     </div>
 
-                    <div className="search-container"  onClick={()=>handleSearch()} >
-                        <input type="text" placeholder="Tìm kiếm sản phẩm..." className="search-input"  onChange={(e)=>handelSearchChange(e)} />
+                    <div className="search-container" onClick={() => handleSearch()} >
+                        <input type="text" placeholder="Tìm kiếm sản phẩm..." className="search-input" onChange={(e) => handelSearchChange(e)} />
                         <button className="search-button">
-                            <FontAwesomeIcon icon={faSearch} className="search-icon"/>
+                            <FontAwesomeIcon icon={faSearch} className="search-icon" />
                         </button>
                     </div>
                 </div>
@@ -98,9 +116,9 @@ export default function Cart() {
                         </tr>
                     </thead>
                     <tbody>
-                         {!search? products.map(product => (
+                        {!search ? products.map(product => (
                             <tr key={product?.id}>
-                                <td><input type="checkbox" checked={product?.checked} onChange={(e) => handleCheckboxChange(e, product?.id)} /></td>
+                                <td><input type="checkbox" value={product?.cartId} onChange={(e) => handleCheckboxChange(e)} /></td>
                                 <td>
                                     <div className="product-info">
                                         <span>{product?.name}</span>
@@ -113,23 +131,23 @@ export default function Cart() {
                                 <td>{product?.total}</td>
                                 <td> <button onClick={() => openConfirmation(product?.cartId)}>Xóa</button></td>
                             </tr>
-                        )):
-                        productSearch.map(product => (
-                            <tr key={product?.id}>
-                                <td><input type="checkbox" checked={product?.checked} onChange={(e) => handleCheckboxChange(e, product?.id)} /></td>
-                                <td>
-                                    <div className="product-info">
-                                        <span>{product?.name}</span>
-                                    </div>
-                                </td>
-                                <td>{product?.color}</td>
-                                <td>{product?.size}</td>
-                                <td>{product?.price}</td>
-                                <td>{product?.quantity}</td>
-                                <td>{product?.total}</td>
-                                <td> <button onClick={() => openConfirmation(product?.cartId)}>Xóa</button></td>
-                            </tr>
-                        ))
+                        )) :
+                            productSearch.map(product => (
+                                <tr key={product?.id}>
+                                    <td><input type="checkbox" checked={product?.checked} value={product?.cartId} onChange={(e) => handleCheckboxChange(e)} /></td>
+                                    <td>
+                                        <div className="product-info">
+                                            <span>{product?.name}</span>
+                                        </div>
+                                    </td>
+                                    <td>{product?.color}</td>
+                                    <td>{product?.size}</td>
+                                    <td>{product?.price}</td>
+                                    <td>{product?.quantity}</td>
+                                    <td>{product?.total}</td>
+                                    <td> <button onClick={() => openConfirmation(product?.cartId)}>Xóa</button></td>
+                                </tr>
+                            ))
                         }
                     </tbody>
                 </table>

@@ -113,7 +113,6 @@ const ProductDetail = () => {
 
     const handleSizeChange = (e) => {
         setSelectedSize(e.target.value);
-        console.log(e.target.value);
     };
 
     const handleItemClick = (index) => {
@@ -131,7 +130,6 @@ const ProductDetail = () => {
 
     const handleColorChange = (color) => {
         setSelectedColor(color);
-        console.log(`Bạn đã chọn màu: ${color}`);
     };
     const dispatch = useDispatch()
 
@@ -152,7 +150,6 @@ const ProductDetail = () => {
             total: quantity * product.price
         };
         dispatch(AddToCart(newItem))
-        console.log(newItem);
         navigate(`/product/cart`);
     };
 
