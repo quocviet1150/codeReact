@@ -9,10 +9,11 @@ export default function Cart() {
     const [listChecked, setListChecked] = useState([]);
     const [search, setSearch] = useState(false);
     const [keySearch, setKeySerch] = useState("");
-    const [selectAll, setSelectAll] = useState(false);
     const { products } = useSelector(state => state.cart)
     const { productSearch } = useSelector(state => state.cart)
     const { productChecked } = useSelector(state => state.cart)
+    const [checkedCount, setCheckedCount] = useState(0);
+    const [checkedTotal, setCheckedTotal] = useState(0);
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -21,7 +22,7 @@ export default function Cart() {
         }, 500);
     }, []);
 
-      if (isLoading) {
+    if (isLoading) {
         return (
             <div className="loading-container">
                 <div className="loading-spinner"></div>
@@ -30,21 +31,6 @@ export default function Cart() {
         );
     }
 
-    const handleSelectAll = (e) => {
-        const isChecked = e.target.checked;
-        if (isChecked) {
-            const allCartIds = products.map(product => product.cartId);
-            setListChecked(allCartIds);
-            dispatch(productCheck(allCartIds));
-        } else {
-            setListChecked([]);
-            dispatch(productCheck([]));
-        }
-        setSelectAll(!selectAll)
-    };
-
-
-
     const handleCheckboxChange = (e) => {
         const newValue = e.target.value;
         const isChecked = e.target.checked;
@@ -52,16 +38,32 @@ export default function Cart() {
             setListChecked(prevListChecked => {
                 const updatedList = [...prevListChecked, newValue];
                 dispatch(productCheck(updatedList));
+                setCheckedCount(prevCount => prevCount + 1);
+                updateCheckedTotal(updatedList);
                 return updatedList;
             });
         } else {
             setListChecked(prevListChecked => {
                 const updatedList = prevListChecked.filter(item => item !== newValue);
                 dispatch(productCheck(updatedList));
+                setCheckedCount(prevCount => prevCount - 1);
+                updateCheckedTotal(updatedList);
                 return updatedList;
             });
         }
     };
+
+    const updateCheckedTotal = (checkedItems) => {
+        let total = 0;
+        checkedItems.forEach(itemId => {
+            const checkedProduct = products.find(product => product.cartId === itemId);
+            if (checkedProduct) {
+                total += checkedProduct.total;
+            }
+        });
+        setCheckedTotal(total);
+    };
+
 
     const openConfirmation = (productId) => {
         dispatch(deleteCart(productId))
@@ -72,11 +74,10 @@ export default function Cart() {
         dispatch(searchCartStart())
         dispatch(searchCart(keySearch))
         setSearch(true)
-
     };
+
     const handelSearchChange = (e) => {
         setKeySerch(e.target.value)
-
     };
 
     return (
@@ -105,7 +106,7 @@ export default function Cart() {
                 <table>
                     <thead>
                         <tr>
-                            <th><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>
+                            <th></th>
                             <th>Product</th>
                             <th>Color</th>
                             <th>Size</th>
@@ -129,7 +130,7 @@ export default function Cart() {
                                 <td>{product?.price}</td>
                                 <td>{product?.quantity}</td>
                                 <td>{product?.total}</td>
-                                <td> <button onClick={() => openConfirmation(product?.cartId)}>Xóa</button></td>
+                                <td> <button onClick={() => openConfirmation(product?.cartId)}>Delete</button></td>
                             </tr>
                         )) :
                             productSearch.map(product => (
@@ -152,6 +153,19 @@ export default function Cart() {
                     </tbody>
                 </table>
             </div>
+
+            <div className="footer">
+                <div style={{ display: 'flex' }} className='footer-content'>
+                    <div>
+                        <span>Number of products selected ({checkedCount})</span>
+                    </div>
+                    <div style={{ paddingRight: '5%' }}>
+                        Total money payable: ${checkedTotal}
+                    </div>
+                    <button>Purchase</button>
+                </div>
+            </div>
+
 
         </>
     )
