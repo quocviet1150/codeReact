@@ -1,5 +1,6 @@
 const initState = {
-  products: localStorage.getItem("newItem") ? localStorage.getItem("newItem") : []
+  productSearch: [],
+  products: localStorage.getItem("newItem") ? localStorage.getItem("newItem") : [],
 }
 
 const cartReducer = (state = initState, { payload, type }) => {
@@ -12,16 +13,24 @@ const cartReducer = (state = initState, { payload, type }) => {
       state.products = deleteCart(state.products, payload)
       localStorage.setItem("newItem", JSON.stringify(state.products))
       return { ...state }
+    case "SEARCH_CART":
+      state.productSearch = searchCart(state.products, payload)
+      return { ...state }
+    case "SEARCH_CART_START":
+        state.productSearch =[]
+        return {...state} 
     default:
       return state;
   }
 };
 
 const deleteCart = (products, cartId) => {
-  console.log(products.filter(p => p.cartId != cartId));
-  console.log(cartId);
-  console.log(products);
   return products.filter(p => p.cartId != cartId);
+};
+
+const searchCart = (products, name) => {
+  console.log(product => product.name.toLowerCase().includes(name.toLowerCase()));
+  return products.filter(product => product.name.toLowerCase().includes(name.toLowerCase()));
 };
 
 export default cartReducer;

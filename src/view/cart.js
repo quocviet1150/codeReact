@@ -2,14 +2,18 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteCart } from '../store/actions/cart';
+import { deleteCart, searchCart, searchCartStart } from '../store/actions/cart';
 
 export default function Cart() {
     const [isLoading, setIsLoading] = useState(true);
+    const [search, setSearch] = useState(false);
+    const [keySearch, setKeySerch] = useState("");
     const [selectAll, setSelectAll] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [productToDelete, setProductToDelete] = useState(null);
     const {products} = useSelector(state=>state.cart)
+    const {productSearch}= useSelector(state=>state.cart)
+    console.log("🚀 ~ Cart ~ productSearch:", productSearch)
     const disptach = useDispatch()
 
     useEffect(() => {
@@ -45,6 +49,18 @@ export default function Cart() {
         disptach(deleteCart(productId))
     };
 
+    const handleSearch = () => {
+        console.log(keySearch.length );
+        disptach(searchCartStart())
+        disptach(searchCart(keySearch))
+        setSearch(true)
+   
+    };
+    const handelSearchChange = (e) => {
+        setKeySerch(e.target.value)
+        
+    };
+
     return (
         <>
             <div className="header_1">
@@ -59,15 +75,15 @@ export default function Cart() {
                         </div>
                     </div>
 
-                    <div class="search-container">
-                        <input type="text" placeholder="Tìm kiếm sản phẩm..." class="search-input" />
-                        <button class="search-button">
-                            <FontAwesomeIcon icon={faSearch} className="search-icon" />
+                    <div className="search-container"  onClick={()=>handleSearch()} >
+                        <input type="text" placeholder="Tìm kiếm sản phẩm..." className="search-input"  onChange={(e)=>handelSearchChange(e)} />
+                        <button className="search-button">
+                            <FontAwesomeIcon icon={faSearch} className="search-icon"/>
                         </button>
                     </div>
                 </div>
             </div>
-            <div class="cart-table">
+            <div className="cart-table">
                 <table>
                     <thead>
                         <tr>
@@ -82,12 +98,11 @@ export default function Cart() {
                         </tr>
                     </thead>
                     <tbody>
-                        {products.map(product => (
+                         {!search? products.map(product => (
                             <tr key={product?.id}>
                                 <td><input type="checkbox" checked={product?.checked} onChange={(e) => handleCheckboxChange(e, product?.id)} /></td>
                                 <td>
                                     <div className="product-info">
-                                        <img src={product?.image} alt={product?.name} />
                                         <span>{product?.name}</span>
                                     </div>
                                 </td>
@@ -98,7 +113,24 @@ export default function Cart() {
                                 <td>{product?.total}</td>
                                 <td> <button onClick={() => openConfirmation(product?.cartId)}>Xóa</button></td>
                             </tr>
-                        ))}
+                        )):
+                        productSearch.map(product => (
+                            <tr key={product?.id}>
+                                <td><input type="checkbox" checked={product?.checked} onChange={(e) => handleCheckboxChange(e, product?.id)} /></td>
+                                <td>
+                                    <div className="product-info">
+                                        <span>{product?.name}</span>
+                                    </div>
+                                </td>
+                                <td>{product?.color}</td>
+                                <td>{product?.size}</td>
+                                <td>{product?.price}</td>
+                                <td>{product?.quantity}</td>
+                                <td>{product?.total}</td>
+                                <td> <button onClick={() => openConfirmation(product?.cartId)}>Xóa</button></td>
+                            </tr>
+                        ))
+                        }
                     </tbody>
                 </table>
             </div>

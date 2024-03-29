@@ -11,3 +11,17 @@ export const deleteCart = (id) => {
     payload: id,
   };
 };
+
+export const searchCart = (name) => {
+  return {
+    type: "SEARCH_CART",
+    payload: name,
+  };
+};
+
+export const searchCartStart = (name) => {
+  return {
+    type: "SEARCH_CART_START",
+    payload: name,
+  };
+};
