@@ -1,16 +1,16 @@
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteCart } from '../store/actions/cart';
 
 export default function Cart() {
     const [isLoading, setIsLoading] = useState(true);
     const [selectAll, setSelectAll] = useState(false);
-    const [products, setProducts] = useState([
-        { id: 1, name: 'Tên sản phẩm 1', color: 'Xanh', size: '27', price: '100,000 VND', quantity: 2, total: '200,000 VND' },
-        { id: 2, name: 'Tên sản phẩm 2', color: 'Đỏ', size: '30', price: '150,000 VND', quantity: 1, total: '150,000 VND' }
-    ]);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [productToDelete, setProductToDelete] = useState(null);
+    const {products} = useSelector(state=>state.cart)
+    const disptach = useDispatch()
 
     useEffect(() => {
         setTimeout(() => {
@@ -28,32 +28,21 @@ export default function Cart() {
     // }
 
     const handleSelectAll = (e) => {
-        setSelectAll(e.target.checked);
-        setProducts(products.map(product => ({ ...product, checked: e.target.checked })));
+        setSelectAll(e.target?.checked);
+        // setProducts(products.map(product => ({ ...product, checked: e.target?.checked })));
     };
 
     const handleCheckboxChange = (e, productId) => {
         const updatedProducts = products.map(product =>
-            product.id === productId ? { ...product, checked: e.target.checked } : product
+            product?.id === productId ? { ...product, checked: e.target?.checked } : product
         );
-        setProducts(updatedProducts);
-        setSelectAll(updatedProducts.every(product => product.checked));
+        // setProducts(updatedProducts);
+        setSelectAll(updatedProducts.every(product => product?.checked));
         console.log(updatedProducts);
     };
 
-    const handleDelete = () => {
-        const updatedProducts = products.filter(product => !product.checked);
-        setProducts(updatedProducts);
-        setShowConfirmation(false);
-    };
-
     const openConfirmation = (productId) => {
-        setProductToDelete(productId);
-        setShowConfirmation(true);
-    };
-
-    const closeConfirmation = () => {
-        setShowConfirmation(false);
+        disptach(deleteCart(productId))
     };
 
     return (
@@ -94,33 +83,24 @@ export default function Cart() {
                     </thead>
                     <tbody>
                         {products.map(product => (
-                            <tr key={product.id}>
-                                <td><input type="checkbox" checked={product.checked} onChange={(e) => handleCheckboxChange(e, product.id)} /></td>
+                            <tr key={product?.id}>
+                                <td><input type="checkbox" checked={product?.checked} onChange={(e) => handleCheckboxChange(e, product?.id)} /></td>
                                 <td>
                                     <div className="product-info">
-                                        <img src={require("../image/home/11.png")} alt={product.name} />
-                                        <span>{product.name}</span>
+                                        <img src={product?.image} alt={product?.name} />
+                                        <span>{product?.name}</span>
                                     </div>
                                 </td>
-                                <td>{product.color}</td>
-                                <td>{product.size}</td>
-                                <td>{product.price}</td>
-                                <td>{product.quantity}</td>
-                                <td>{product.total}</td>
-                                <td> <button onClick={() => openConfirmation(product.id)}>Xóa</button></td>
+                                <td>{product?.color}</td>
+                                <td>{product?.size}</td>
+                                <td>{product?.price}</td>
+                                <td>{product?.quantity}</td>
+                                <td>{product?.total}</td>
+                                <td> <button onClick={() => openConfirmation(product?.cartId)}>Xóa</button></td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-                {showConfirmation && (
-                    <div className="popup">
-                        <div className="popup-content">
-                            <p>Bạn chắc chắn muốn xóa sản phẩm này ?</p>
-                            <button onClick={handleDelete}>Xóa</button>
-                            <button onClick={closeConfirmation}>Hủy</button>
-                        </div>
-                    </div>
-                )}
             </div>
 
         </>

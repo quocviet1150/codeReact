@@ -3,6 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Instructions from "./instructions";
+import localStorage from 'redux-persist/es/storage';
+import { useDispatch } from 'react-redux';
+import { AddToCart } from '../store/actions/cart';
+import { v4 as uuidv4 } from 'uuid';
 
 const ProductDetail = () => {
     const product =
@@ -129,6 +133,7 @@ const ProductDetail = () => {
         setSelectedColor(color);
         console.log(`Bạn đã chọn màu: ${color}`);
     };
+    const dispatch = useDispatch()
 
     const handleAddToCart = () => {
         if (!selectedColor) {
@@ -136,17 +141,19 @@ const ProductDetail = () => {
             return;
         }
         const newItem = {
+            cartId: uuidv4(),
             id: id,
-            image: product.path,
+            name: product.name,
+            path: product.path,
             color: selectedColor,
             price: product.price,
             size: selectedSize,
             quantity: quantity,
             total: quantity * product.price
         };
+        dispatch(AddToCart(newItem))
         console.log(newItem);
-        setCart([...cart, newItem]);
-        alert('Thêm vào giỏ hàng thành công.');
+        navigate(`/product/cart`);
     };
 
     return (
