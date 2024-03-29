@@ -168,7 +168,7 @@ export default function Home() {
                 <div className='image'>
                     <img className="image_home" src={require("../image/home/1.png")} alt="Shirt Store Logo" />
 
-                    <div className="text-overlay">
+                    {/* <div className="text-overlay">
 
                         <div className="font_home">Enjoy This </div>
                         <div className="font_home">Winter Trend </div>
@@ -176,7 +176,7 @@ export default function Home() {
                         <div className="button_click">
                             <button className="button" onClick={() => window.location.href = "http://localhost:3000/product#product"}>shop now </button>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="image-child">
