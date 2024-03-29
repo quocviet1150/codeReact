@@ -98,14 +98,14 @@ const ProductDetail = () => {
         }
     };
 
-    // if (isLoading) {
-    //     return (
-    //         <div className="loading-container">
-    //             <div className="loading-spinner"></div>
-    //             <div>Loading...</div>
-    //         </div>
-    //     );
-    // }
+    if (isLoading) {
+        return (
+            <div className="loading-container">
+                <div className="loading-spinner"></div>
+                <div>Loading...</div>
+            </div>
+        );
+    }
 
     const handleCart = () => {
         navigate(`/product/cart`);
@@ -135,7 +135,7 @@ const ProductDetail = () => {
 
     const handleAddToCart = () => {
         if (!selectedColor) {
-            alert('Vui lòng chọn màu trước khi thêm vào giỏ hàng.');
+            alert('Please select color before adding to cart.');
             return;
         }
         const newItem = {
@@ -248,12 +248,12 @@ const ProductDetail = () => {
                             <b>Other models<span style={{ color: 'red' }}> *</span>:</b>
                         </div>
                         <div className="color-picker">
-                            <a className={selectedColor === 'Xanh' ? 'color-selected' : 'color-black'} onClick={() => handleColorChange('Xanh')}>Xanh</a>
-                            <a className={selectedColor === 'Đỏ' ? 'color-selected' : 'color-black'} onClick={() => handleColorChange('Đỏ')}>Đỏ</a>
-                            <a className={selectedColor === 'Trắng' ? 'color-selected' : 'color-black'} onClick={() => handleColorChange('Trắng')}>Trắng</a>
-                            <a className={selectedColor === 'Tím' ? 'color-selected' : 'color-black'} onClick={() => handleColorChange('Tím')}>Tím</a>
-                            <a className={selectedColor === 'Vàng' ? 'color-selected' : 'color-black'} onClick={() => handleColorChange('Vàng')}>Vàng</a>
-                            <a className={selectedColor === 'Đen' ? 'color-selected' : 'color-black'} onClick={() => handleColorChange('Đen')}>Đen</a>
+                            <a className={selectedColor === 'Green' ? 'color-selected' : 'color-black'} onClick={() => handleColorChange('Green')}>Green</a>
+                            <a className={selectedColor === 'Red' ? 'color-selected' : 'color-black'} onClick={() => handleColorChange('Red')}>Red</a>
+                            <a className={selectedColor === 'White' ? 'color-selected' : 'color-black'} onClick={() => handleColorChange('White')}>White</a>
+                            <a className={selectedColor === 'Violet' ? 'color-selected' : 'color-black'} onClick={() => handleColorChange('Violet')}>Violet</a>
+                            <a className={selectedColor === 'Yellow' ? 'color-selected' : 'color-black'} onClick={() => handleColorChange('Yellow')}>Yellow</a>
+                            <a className={selectedColor === 'Black' ? 'color-selected' : 'color-black'} onClick={() => handleColorChange('Black')}>Black</a>
                         </div>
                     </div>
 

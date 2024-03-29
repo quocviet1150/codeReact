@@ -21,14 +21,14 @@ export default function Cart() {
         }, 500);
     }, []);
 
-    //   if (isLoading) {
-    //     return (
-    //         <div className="loading-container">
-    //             <div className="loading-spinner"></div>
-    //             <div>Loading...</div>
-    //         </div>
-    //     );
-    // }
+      if (isLoading) {
+        return (
+            <div className="loading-container">
+                <div className="loading-spinner"></div>
+                <div>Loading...</div>
+            </div>
+        );
+    }
 
     const handleSelectAll = (e) => {
         const isChecked = e.target.checked;
@@ -82,8 +82,8 @@ export default function Cart() {
     return (
         <>
             <div className="header_1">
-                <div className="header" style={{ padding: '25px 0', }}>
-                    <div className="logo-container" onClick={() => window.location.href = "http://localhost:3000"} style={{ width: '50%' }}>
+                <div className="header" style={{ padding: '25px 0', width: '80% !important', flexDirection: 'row', justifyContent: 'center' }}>
+                    <div className="logo-container" onClick={() => window.location.href = "http://localhost:3000/product"} style={{ width: '50%' }}>
                         <div style={{ borderRight: '1px solid #ccc', paddingRight: '2%' }}>
                             <img className="logo" src="https://img.freepik.com/premium-vector/tshirt-logo-clothing-logo-apparel-store-icon-fashion-logo-design-tshirt-icon-template_657888-112.jpg" alt="Shirt Store Logo" />
                             <span className="store-name">Shirt Store</span>
@@ -94,7 +94,7 @@ export default function Cart() {
                     </div>
 
                     <div className="search-container" onClick={() => handleSearch()} >
-                        <input type="text" placeholder="Tìm kiếm sản phẩm..." className="search-input" onChange={(e) => handelSearchChange(e)} />
+                        <input type="text" placeholder="Search product..." className="search-input" onChange={(e) => handelSearchChange(e)} />
                         <button className="search-button">
                             <FontAwesomeIcon icon={faSearch} className="search-icon" />
                         </button>
@@ -106,13 +106,13 @@ export default function Cart() {
                     <thead>
                         <tr>
                             <th><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>
-                            <th>Sản phẩm</th>
-                            <th>Màu sắc</th>
+                            <th>Product</th>
+                            <th>Color</th>
                             <th>Size</th>
-                            <th>Giá</th>
-                            <th>Số lượng</th>
-                            <th>Tổng cộng</th>
-                            <th>Xóa</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -145,7 +145,7 @@ export default function Cart() {
                                     <td>{product?.price}</td>
                                     <td>{product?.quantity}</td>
                                     <td>{product?.total}</td>
-                                    <td> <button onClick={() => openConfirmation(product?.cartId)}>Xóa</button></td>
+                                    <td> <button onClick={() => openConfirmation(product?.cartId)}>Delete</button></td>
                                 </tr>
                             ))
                         }

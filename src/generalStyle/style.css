@@ -511,12 +511,12 @@
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  /* Tạo khoảng cách với các phần khác trên trang */
 }
 
 .cart-table table {
-  width: 100%;
+  width: 75%;
   border-collapse: collapse;
+  margin-left: 12.5%;
 }
 
 .cart-table th,

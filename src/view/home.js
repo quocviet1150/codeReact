@@ -34,14 +34,14 @@ export default function Home() {
     //  khi call data thì cái item sẽ được lấy theo : "{kiểu.id}"
     // if (error) return <div>Error: {error.message}</div>;
 
-    // if (isLoading) {
-    //     return (
-    //         <div className="loading-container">
-    //             <div className="loading-spinner"></div>
-    //             <div>Loading...</div>
-    //         </div>
-    //     );
-    // }
+    if (isLoading) {
+        return (
+            <div className="loading-container">
+                <div className="loading-spinner"></div>
+                <div>Loading...</div>
+            </div>
+        );
+    }
 
     const handleItemClick = (index) => {
         setSelectedItem(index);
@@ -140,7 +140,7 @@ export default function Home() {
         <>
             <div className="header_1">
                 <div className="header">
-                    <div className="logo-container" onClick={() => window.location.href = "http://localhost:3000"}>
+                    <div className="logo-container" onClick={() => window.location.href = "http://localhost:3000/product"}>
                         <img className="logo" src="https://img.freepik.com/premium-vector/tshirt-logo-clothing-logo-apparel-store-icon-fashion-logo-design-tshirt-icon-template_657888-112.jpg" alt="Shirt Store Logo" />
                         <span className="store-name">Shirt Store</span>
                     </div>
