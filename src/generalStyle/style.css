@@ -610,3 +610,50 @@
 .popup button:hover {
   background-color: #d0401e;
 }
+
+.footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.footer-content {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  padding-left: 17%;
+}
+
+.footer-content span {
+  font-weight: bold;
+}
+
+.footer-content div:nth-child(2) {
+  flex-grow: 1;
+  text-align: right;
+}
+
+.footer-content p {
+  margin: 0;
+}
+
+.footer-content button {
+  background-color: #ee4d2d;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.footer-content button:hover {
+  background-color: #c73316;
+}
