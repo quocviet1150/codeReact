@@ -18,7 +18,7 @@ const allReducers = combineReducers({
 const persistsConfig = {
   key: "root",
   storage,
-  whitelist: ["counter", "user","cart"],
+  whitelist: ["counter", "user", "cart"],
 };
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
