@@ -12,18 +12,15 @@ export default function Home() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        // fetchData();
+        fetchData();
 
-        // cái setTimeout xóa đi khi calll api
-        setTimeout(() => {
-            setIsLoading(!isLoading);
-        }, 500);
     }, []);
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://your-backend-api-url');
+            const response = await axios.get('http://localhost:5000/api/Shirts');
             setData(response.data);
+            console.log(response.data);
             setIsLoading(!isLoading);
         } catch (error) {
             setError(error);
@@ -200,12 +197,12 @@ export default function Home() {
                     Featured Products
                 </div>
                 <div className="image-product-container">
-                    {images.map((image, index) => (
+                    {data.map((image, index) => (
                         <div className="image-product" key={index}>
-                            <a className="product-link" onClick={() => handleProductClick(image.id)}>
-                                <img className="product-image" src={image.imagePath} alt={image.name} />
-                                <p className="name" title={image.name}>{image.name}</p>
-                                <p className="price"><b>Price:</b> ${image.price}</p>
+                            <a className="product-link" onClick={() => handleProductClick(image?.item1?.id)}>
+                                <img className="product-image" src={"http://localhost:5000/api/images/" + image?.item2[0]?.imgPath} alt={image?.item1?.name} />
+                                <p className="name" title={image?.item1?.name}>{image?.item1?.name}</p>
+                                <p className="price"><b>Price:</b> ${image?.item1?.price}</p>
                             </a>
                         </div>
                     ))}
