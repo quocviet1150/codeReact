@@ -1,50 +1,14 @@
 import { faPlus, faSearch, faShoppingBasket, faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import Instructions from "./instructions";
-import localStorage from 'redux-persist/es/storage';
 import { useDispatch } from 'react-redux';
-import { AddToCart } from '../store/actions/cart';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { AddToCart } from '../store/actions/cart';
+import Instructions from "./instructions";
+import axios from 'axios';
 
 const ProductDetail = () => {
-    const product =
-    {
-        name: "Quần kaki túi nhỏ kiểu form slimfit QK026 màu xám",
-        price: 10.99,
-        path: require("../image/home/3.png"),
-        quantityRemaining: 100,
-        quantityFeedback: 50,
-        sellNumber: 500
-    }
-
-    const imagePaths = {
-        0: [
-            require("../image/home/1.png"),
-            require("../image/home/2.png"),
-        ],
-        1: [
-            require("../image/home/1.png"),
-            require("../image/home/2.png"),
-            require("../image/home/3.png"),
-            require("../image/home/4.png"),
-            require("../image/home/4.png"),
-            require("../image/home/4.png"),
-            require("../image/home/4.png"),
-        ],
-        2: [
-            require("../image/home/2.png"),
-            require("../image/home/3.png"),
-        ],
-        3: [
-            require("../image/home/4.png"),
-            require("../image/home/4.png"),
-        ],
-        4: [
-            require("../image/home/1.png"),
-        ]
-    };
 
     const { id } = useParams();
     const [selectedItem, setSelectedItem] = useState(null);
@@ -57,32 +21,24 @@ const ProductDetail = () => {
     const navigate = useNavigate();
     const [selectedColor, setSelectedColor] = useState(null);
     const [cart, setCart] = useState([]);
+    const [data, setData] = useState(null);
 
     useEffect(() => {
-        // fetchProductDetail();
-
-        // cái setTimeout xóa đi khi calll api
-        setTimeout(() => {
-            setIsLoading(!isLoading);
-        }, 500);
-        setSelectedImagePath(product.path);
+        fetchProductDetail();
     }, [id]);
 
-    // const fetchProductDetail = async () => {
-    //     try {
-    //         const response = await axios.get(`http://your-backend-api-url/products/${id}`);
-    //         const productData = response.data;
-
-    //         setSelectedItem(productData);
-    //         setSelectedImagePath(productData.path);
-    //         setIsLoading(!isLoading);
-    //     } catch (error) {
-    //         console.error('Error fetching product detail:', error);
-    //         setIsLoading(isLoading);
-    //     }
-    // };
-
-    //  khi call data thì cái item sẽ được lấy kiểu : "{productData.id}"
+    const fetchProductDetail = async () => {
+        try {
+            const response = await axios.get(`http://localhost:5000/api/Shirts/${id}`);
+            setData(response?.data);
+            setSelectedImagePath(response?.data?.item2[0]?.imgPath);
+            console.log(response?.data);
+            setIsLoading(!isLoading);
+        } catch (error) {
+            console.error('Error fetching product detail:', error);
+            setIsLoading(isLoading);
+        }
+    };
 
     const togglePopup = () => {
         setPopupVisible(!isPopupVisible);
@@ -141,13 +97,13 @@ const ProductDetail = () => {
         const newItem = {
             cartId: uuidv4(),
             id: id,
-            name: product.name,
-            path: product.path,
+            name: data?.item1?.name,
+            path:  data?.item1?.path,
             color: selectedColor,
-            price: product.price,
+            price:  data?.item1?.price,
             size: selectedSize,
             quantity: quantity,
-            total: quantity * product.price
+            total: quantity *  data?.item1?.price
         };
         dispatch(AddToCart(newItem))
         navigate(`/product/cart`);
@@ -184,26 +140,26 @@ const ProductDetail = () => {
             <div className="breadcrumb">
                 <Link to="/product" className="breadcrumb-item-hover">Product</Link>
                 <span className="breadcrumb-divider">/</span>
-                <span className="breadcrumb-item">{product.name}</span>
+                <span className="breadcrumb-item">{data?.item1?.name}</span>
             </div>
 
             <div style={{ display: 'flex', marginLeft: '5%', padding: '0% 5%' }}>
                 <div style={{ width: "10%", height: '85vh', overflowY: 'auto', cursor: 'pointer' }}>
-                    {(selectedProductId === null ? imagePaths[0] : imagePaths[selectedProductId]).map((path, index) => (
+                    {Array.isArray(data?.item2) && data?.item2.map((item, index) => (
                         <img
                             key={index}
                             className="product-detail-view-total"
-                            src={path}
+                            src={"http://localhost:5000/api/images/" + item?.imgPath}
                             alt={`Image ${index + 1}`}
-                            onClick={() => handleImageClick(path)}
+                            onClick={() => handleImageClick(item?.imgPath)}
                         />
                     ))}
                 </div>
                 <div style={{ width: "45%" }}>
-                    <img className="product-detail-image" src={selectedImagePath} alt="Shirt Store Logo" />
+                    <img className="product-detail-image" src={"http://localhost:5000/api/images/" + selectedImagePath} alt="Shirt Store Logo" />
                 </div>
                 <div style={{ width: "45%" }}>
-                    <div className="title-image">{product.name.toLowerCase()}</div>
+                    <div className="title-image">{data?.item1?.name.toLowerCase()}</div>
 
                     <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', paddingTop: '1%' }}>
                         <div style={{ marginRight: '10px', borderRight: '1px solid #ccc', paddingRight: '5px' }}>
@@ -214,12 +170,12 @@ const ProductDetail = () => {
                             <span style={{ color: '#fadb14', marginRight: '5px' }}>★</span>
                             <span style={{ color: '#fadb14', marginRight: '5px' }}>★</span>
                         </div>
-                        <span style={{ marginRight: '10px', borderRight: '1px solid #ccc', paddingRight: '5px' }}><b>Feedback:</b> {product.quantityFeedback}</span>
-                        <span style={{ marginRight: '10px' }}><b>Sold:</b> {product.sellNumber}</span>
+                        <span style={{ marginRight: '10px', borderRight: '1px solid #ccc', paddingRight: '5px' }}><b>Feedback:</b> 500</span>
+                        <span style={{ marginRight: '10px' }}><b>Sold:</b> 5000</span>
                     </div>
 
                     <div style={{ padding: '4% 0 2% 0', fontSize: '18px' }}>
-                        <b>Price:</b> <div className='product-price'>${product.price}</div>
+                        <b>Price:</b> <div className='product-price'>${data?.item1?.price}</div>
                     </div>
 
                     <div style={{ paddingBottom: '4%', display: 'flex' }}>
@@ -300,7 +256,7 @@ const ProductDetail = () => {
                                 <button className="increment-btn" onClick={incrementQuantity} style={{ background: '#ffffff', border: '1px solid #ccc', borderLeft: 'none' }}>+</button>
                             </div>
 
-                            <div style={{ paddingLeft: '5%' }}>{product.quantityRemaining} products available</div>
+                            {/* <div style={{ paddingLeft: '5%' }}> products available</div> */}
                         </div>
 
                     </div>
