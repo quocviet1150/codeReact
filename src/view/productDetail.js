@@ -1,12 +1,13 @@
 import { faPlus, faSearch, faShoppingBasket, faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { AddToCart } from '../store/actions/cart';
 import Instructions from "./instructions";
 import axios from 'axios';
+import { Shirt } from '../apiServices';
 
 const ProductDetail = () => {
 
@@ -22,6 +23,7 @@ const ProductDetail = () => {
     const [selectedColor, setSelectedColor] = useState(null);
     const [cart, setCart] = useState([]);
     const [data, setData] = useState(null);
+    const { token } = useSelector(state => state.user);
 
     useEffect(() => {
         fetchProductDetail();
@@ -29,10 +31,9 @@ const ProductDetail = () => {
 
     const fetchProductDetail = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/Shirts/${id}`);
+            const response = await Shirt.getById(id, token);
             setData(response?.data);
             setSelectedImagePath(response?.data?.item2[0]?.imgPath);
-            console.log(response?.data);
             setIsLoading(!isLoading);
         } catch (error) {
             console.error('Error fetching product detail:', error);
@@ -98,13 +99,13 @@ const ProductDetail = () => {
             cartId: uuidv4(),
             id: id,
             name: data?.item1?.name,
-            path:  data?.item1?.path,
             color: selectedColor,
-            price:  data?.item1?.price,
+            price: data?.item1?.price,
             size: selectedSize,
             quantity: quantity,
-            total: quantity *  data?.item1?.price
+            total: quantity * data?.item1?.price
         };
+        console.log(newItem);
         dispatch(AddToCart(newItem))
         navigate(`/product/cart`);
     };

@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const BASEURL = "http://localhost:5152/api";
+const BASEURL = "http://localhost:5000/api";
+const BASEURLIMAGE = "http://localhost:5000/api/images/";
+
 
 export const Shirt = {
   get,
@@ -8,10 +10,13 @@ export const Shirt = {
   put,
   getById,
   _delete,
+  BASEURLIMAGE,
 };
 
-function get() {
-  return axios.get(`${BASEURL}/Shirts`);
+function get(token) {
+  return axios.get(`${BASEURL}/Shirts`, {
+      headers: { Authorization: "Bearer " + token },
+    });
 }
 
 function post(data, token) {

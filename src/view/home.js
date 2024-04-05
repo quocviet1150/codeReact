@@ -1,8 +1,9 @@
 import { faSearch, faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Shirt } from '../apiServices';
+import { useSelector } from 'react-redux';
 
 export default function Home() {
     const [selectedItem, setSelectedItem] = useState(null);
@@ -10,6 +11,7 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
+    const { token } = useSelector(state => state.user);
 
     useEffect(() => {
         fetchData();
@@ -18,18 +20,14 @@ export default function Home() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/Shirts');
+            const response = await Shirt.get(token);
             setData(response.data);
-            console.log(response.data);
             setIsLoading(!isLoading);
         } catch (error) {
             setError(error);
             setIsLoading(!isLoading);
         }
     };
-
-    //  khi call data thì cái item sẽ được lấy theo : "{kiểu.id}"
-    // if (error) return <div>Error: {error.message}</div>;
 
     if (isLoading) {
         return (
@@ -89,32 +87,18 @@ export default function Home() {
             <div className="home" id="home">
                 <div className='image'>
                     <img className="image_home" src={require("../image/home/1.png")} alt="Shirt Store Logo" />
-
-                    {/* <div className="text-overlay">
-
-                        <div className="font_home">Enjoy This </div>
-                        <div className="font_home">Winter Trend </div>
-                        <div className="font_title">Discover now latest collection </div>
-                        <div className="button_click">
-                            <button className="button" onClick={() => window.location.href = "http://localhost:3000/product#product"}>shop now </button>
-                        </div>
-                    </div> */}
                 </div>
 
                 <div className="image-child">
-
                     <div className="image_child">
                         <img className="image_one" src={require("../image/home/2.png")} alt="Shirt Store Logo" />
                     </div>
-
                     <div className="image_child2">
                         <img className="image_two" src={require("../image/home/3.png")} alt="Shirt Store Logo" />
                     </div>
-
                     <div className="image_child2">
                         <img className="image_two" src={require("../image/home/8.png")} alt="Shirt Store Logo" />
                     </div>
-
                 </div>
             </div>
             <div className="product" id="product">
@@ -122,10 +106,10 @@ export default function Home() {
                     Featured Products
                 </div>
                 <div className="image-product-container">
-                    {data.map((image, index) => (
+                    {data?.map((image, index) => (
                         <div className="image-product" key={index}>
                             <a className="product-link" onClick={() => handleProductClick(image?.item1?.id)}>
-                                <img className="product-image" src={"http://localhost:5000/api/images/" + image?.item2[0]?.imgPath} alt={image?.item1?.name} />
+                                <img className="product-image" src={Shirt.BASEURLIMAGE + image?.item2[0]?.imgPath} alt={image?.item1?.name} />
                                 <p className="name" title={image?.item1?.name}>{image?.item1?.name}</p>
                                 <p className="price"><b>Price:</b> ${image?.item1?.price}</p>
                             </a>
